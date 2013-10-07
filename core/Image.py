@@ -22,13 +22,13 @@ class Image( object ):
     " @return (Image) By image filename
     """
     @staticmethod
-    def get( filename, h = 400 ):
+    def get( filename ):
         img = Image()
         img._img = cv2.imread( filename, 0 )
         if img._img is None:
             raise Exception( 1, "Could not open file" )
 
-        surf = cv2.SURF( h )
+        surf = cv2.SURF( 400 )
         img._keypoints, img._descriptors = surf.detectAndCompute( img._img, None )
 
         return img
@@ -96,7 +96,7 @@ class Image( object ):
 
         return Image.unserialize( db )
 
-        """
+    """
     " @return (Image)
     """
     @staticmethod
@@ -136,15 +136,16 @@ class Image( object ):
     """
     def compareInPercent( self, img ):
         pairs = self._match( img )
-
         l1 = len( self._keypoints )
         l2 = len( img._keypoints )
         lp = len( pairs )
-        ml = min( l1, l2 )
         r = ( lp * 100 ) / l1
 
         return r
 
+    """
+    " @return (bool)
+    """
     def looksLike( self, img ):
         p12 = self.compareInPercent( img )
         p21 = img.compareInPercent( self )

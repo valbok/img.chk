@@ -152,5 +152,33 @@ class ImageTest( unittest.TestCase ):
 
         self.assertEquals( False, ps )
 
+    def testLooksLikeFalse13( self ):
+        img1 = Image.get( "tests/core/images/1.jpg" )
+        img2 = Image.get( "tests/core/images/3.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( False, ps )
+
+    def testLooksLikeFalse14( self ):
+        img1 = Image.get( "tests/core/images/1.jpg" )
+        img2 = Image.get( "tests/core/images/4.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( False, ps )
+
+    def testLooksLikeFalse34( self ):
+        img1 = Image.get( "tests/core/images/3.jpg" )
+        img2 = Image.get( "tests/core/images/4.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( False, ps )
+
+    def testLooksLikeTrue4500( self ):
+        img1 = Image.get( "tests/core/images/4.jpg" )
+        img2 = Image.get( "tests/core/images/4_500.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( True, ps )
+
 if __name__ == '__main__':
     unittest.main()
