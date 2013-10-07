@@ -54,41 +54,6 @@ class ImageTest( unittest.TestCase ):
         f.close()
         self.assertEquals( lines, lines2 )
 
-    def testCompareToSelf( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/1.jpg" )
-        ps = img1.compareInPercent( img2 )
-
-        self.assertEquals( 100, ps )
-
-    def testCompareTo( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/1_500.jpg" )
-        ps = img1.compareInPercent( img2 )
-
-        self.assertEquals( True, ps  > 70 )
-
-    def testCompareToR( self ):
-        img1 = Image.get( "tests/core/images/1_500.jpg" )
-        img2 = Image.get( "tests/core/images/1.jpg" )
-        ps = img1.compareInPercent( img2 )
-
-        self.assertEquals( True, ps  > 50 )
-
-    def testCompareTo2( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/2.jpg" )
-        ps = img1.compareInPercent( img2 )
-
-        self.assertEquals( True,  ps < 10 )
-
-    def testLooksLike( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/2.jpg" )
-        ps = img1.looksLike( img2 )
-
-        self.assertEquals( False, ps )
-
     def testLooksLikeTrue( self ):
         img1 = Image.get( "tests/core/images/1.jpg" )
         img2 = Image.get( "tests/core/images/1.jpg" )
@@ -144,6 +109,48 @@ class ImageTest( unittest.TestCase ):
         ps = img1.looksLike( img2 )
 
         self.assertEquals( True, ps )
+
+    def testLooksLike( self ):
+        img1 = Image.get( "tests/core/images/1.jpg" )
+        img2 = Image.get( "tests/core/images/2.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( False, ps )
+
+    def testLooksLikeFalse( self ):
+        img1 = Image.get( "tests/core/images/1.jpg" )
+        img2 = Image.get( "tests/core/images/2_150.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( False, ps )
+
+    def testLooksLikeFalse1150( self ):
+        img1 = Image.get( "tests/core/images/1_150.jpg" )
+        img2 = Image.get( "tests/core/images/2.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( False, ps )
+
+    def testLooksLikeFalse11502( self ):
+        img1 = Image.get( "tests/core/images/1_150_2.jpg" )
+        img2 = Image.get( "tests/core/images/2.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( False, ps )
+
+    def testLooksLikeFalse1115022150( self ):
+        img1 = Image.get( "tests/core/images/1_150_2.jpg" )
+        img2 = Image.get( "tests/core/images/2_150.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( False, ps )
+
+    def testLooksLikeFalse1115022150( self ):
+        img1 = Image.get( "tests/core/images/1_150_2.jpg" )
+        img2 = Image.get( "tests/core/images/2.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( False, ps )
 
 if __name__ == '__main__':
     unittest.main()

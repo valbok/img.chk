@@ -136,16 +136,18 @@ class Image( object ):
     """
     def compareInPercent( self, img ):
         pairs = self._match( img )
+
         l1 = len( self._keypoints )
         l2 = len( img._keypoints )
         lp = len( pairs )
         ml = min( l1, l2 )
-        r = ( lp * 100 ) / ml
+        r = ( lp * 100 ) / l1
 
         return r
 
     def looksLike( self, img ):
-        p = self.compareInPercent( img )
+        p12 = self.compareInPercent( img )
+        p21 = img.compareInPercent( self )
 
-        return p > 40
+        return p12 > 40 or p21 > 40
 
