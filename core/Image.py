@@ -146,6 +146,6 @@ class Image( object ):
 
     def looksLike( self, img ):
         p = self.compareInPercent( img )
-        print p
+
         return p > 40
 
