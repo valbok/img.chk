@@ -116,13 +116,11 @@ class Image( object ):
                 mkp1.append( kp1[m.queryIdx] )
                 mkp2.append( kp2[m.trainIdx] )
 
-        kp_pairs = zip(mkp1, mkp2)
+        kp_pairs = zip( mkp1, mkp2 )
+
         return kp_pairs
 
-    """
-    " @return (zip)
-    """
-    def compareTo( self, img ):
+    def _match( self, img ):
         matcher = cv2.BFMatcher( cv2.NORM_L2 )
         kp1 = self._keypoints
         desc1 = self._descriptors
@@ -132,5 +130,18 @@ class Image( object ):
         pairs = Image._filterMatches( kp1, kp2, matches )
 
         return pairs
+
+    """
+    " @return (float)
+    """
+    def compareInPercent( self, img ):
+        pairs = self._match( img )
+        l1 = len( self._keypoints )
+        l2 = len( img._keypoints )
+        lp = len( pairs )
+        ml = min( l1, l2 )
+        r = ( lp * 100 ) / ml
+
+        return r
 
 

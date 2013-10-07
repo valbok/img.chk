@@ -54,11 +54,33 @@ class ImageTest( unittest.TestCase ):
         f.close()
         self.assertEquals( lines, lines2 )
 
+    def testCompareToSelf( self ):
+        img1 = Image.get( "tests/core/images/1.jpg" )
+        img2 = Image.get( "tests/core/images/1.jpg" )
+        ps = img1.compareInPercent( img2 )
+
+        self.assertEquals( 100, ps )
+
     def testCompareTo( self ):
         img1 = Image.get( "tests/core/images/1.jpg" )
         img2 = Image.get( "tests/core/images/1_500.jpg" )
-        ps = img1.compareTo( img2 )
-        self.assertEquals( True, len( ps ) > 0 )
+        ps = img1.compareInPercent( img2 )
+
+        self.assertEquals( True, ps  > 70 )
+
+    def testCompareToR( self ):
+        img1 = Image.get( "tests/core/images/1_500.jpg" )
+        img2 = Image.get( "tests/core/images/1.jpg" )
+        ps = img1.compareInPercent( img2 )
+
+        self.assertEquals( True, ps  > 50 )
+
+    def testCompareTo2( self ):
+        img1 = Image.get( "tests/core/images/1.jpg" )
+        img2 = Image.get( "tests/core/images/2.jpg" )
+        ps = img1.compareInPercent( img2 )
+
+        self.assertEquals( True,  ps < 10 )
 
 if __name__ == '__main__':
     unittest.main()
