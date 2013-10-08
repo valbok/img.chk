@@ -111,14 +111,14 @@ class Image( object ):
     def _filterMatches( kp1, kp2, matches, ratio = 0.75 ):
         mkp1, mkp2 = [], []
         for m in matches:
-            if len(m) == 2 and m[0].distance < m[1].distance * ratio:
+            if len( m ) == 2 and m[0].distance <= m[1].distance * ratio:
                 m = m[0]
                 mkp1.append( kp1[m.queryIdx] )
                 mkp2.append( kp2[m.trainIdx] )
 
-        kp_pairs = zip( mkp1, mkp2 )
+        pairs = zip( mkp1, mkp2 )
 
-        return kp_pairs
+        return pairs
 
     def _match( self, img ):
         matcher = cv2.BFMatcher( cv2.NORM_L2 )
@@ -151,4 +151,3 @@ class Image( object ):
         p21 = img.compareInPercent( self )
 
         return p12 > 40 or p21 > 40
-

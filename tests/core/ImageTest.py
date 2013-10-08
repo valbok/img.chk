@@ -17,7 +17,7 @@ class ImageTest( unittest.TestCase ):
         img = Image.get( "tests/core/images/1.jpg" )
         self.assertEquals( True, isinstance( img, Image ) )
 
-    def tes1tDumpToFile( self ):
+    def testDumpToFile( self ):
         img = Image.get( "tests/core/images/1.jpg" )
         img.dumpToFile( "tests/core/dumps/1.dump" )
 
@@ -179,6 +179,44 @@ class ImageTest( unittest.TestCase ):
         ps = img1.looksLike( img2 )
 
         self.assertEquals( True, ps )
+
+    def testLoadFromFileSelf( self ):
+        img1 = Image.loadFromFile( "tests/core/dumps/1.dump" )
+        img2 = Image.loadFromFile( "tests/core/dumps/1.dump" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( True, ps )
+
+
+    def testLooksLikeTrueRDumpLoad( self ):
+        img1 = Image.loadFromFile( "tests/core/dumps/1.dump" )
+        img2 = Image.get( "tests/core/images/1.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( True, ps )
+
+    def testLooksLikeTrueRDump( self ):
+        img1 = Image.get( "tests/core/images/1.jpg" )
+        img2 = Image.get( "tests/core/images/1_150.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( True, ps )
+        img1.dumpToFile( "tests/core/dumps/tmp/1.dump" )
+        img2.dumpToFile( "tests/core/dumps/tmp/1_150.dump" )
+
+        img11 = Image.loadFromFile( "tests/core/dumps/tmp/1.dump" )
+        img22 = Image.loadFromFile( "tests/core/dumps/tmp/1_150.dump" )
+        ps = img11.looksLike( img22 )
+
+        self.assertEquals( True, ps )
+
+    def testLooksLikeTrueRDumpLoad150( self ):
+        img1 = Image.loadFromFile( "tests/core/dumps/1_150.dump" )
+        img2 = Image.get( "tests/core/images/1_150.jpg" )
+        ps = img1.looksLike( img2 )
+
+        self.assertEquals( True, ps )
+
 
 if __name__ == '__main__':
     unittest.main()
