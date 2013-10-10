@@ -43,6 +43,25 @@ class ImageTest( unittest.TestCase ):
         f.close()
         self.assertEquals( lines, lines2 )
 
+    def testDumpIdentity( self ):
+        img1 = Image.get( "tests/core/images/1.jpg" )
+        lines = img1.dump()
+        img2 = Image.load( lines )
+        for i in xrange( len( img1._keypoints ) ):
+            k1 = img1._keypoints[i]
+            k2 = img2._keypoints[i]
+            self.assertEquals( k1.pt, k2.pt )
+            self.assertEquals( k1.size, k2.size )
+            self.assertEquals( k1.angle, k2.angle )
+            self.assertEquals( k1.response, k2.response )
+            self.assertEquals( k1.octave, k2.octave )
+            self.assertEquals( k1.class_id, k2.class_id )
+            desc1 = img1._descriptors[i]
+            desc2 = img2._descriptors[i]
+            self.assertEquals( len( desc1 ), len( desc2 ) )
+            for d in xrange( len( desc1 ) ):
+                self.assertEquals( desc1[d], desc2[d] )
+
     def testLoadFromFile( self ):
         img = Image.loadFromFile( "tests/core/dumps/1.dump" )
         f = open( "tests/core/dumps/1.dump.exp" )
@@ -216,7 +235,7 @@ class ImageTest( unittest.TestCase ):
         ps = img1.looksLike( img2 )
 
         self.assertEquals( True, ps )
-
+    
 
 if __name__ == '__main__':
     unittest.main()

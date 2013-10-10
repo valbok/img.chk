@@ -7,6 +7,7 @@
 import numpy
 import cv2
 import cPickle as pickle
+from matplotlib import pyplot as plt
 
 """
 " Base class to handle image comparisons
@@ -39,7 +40,7 @@ class Image( object ):
         i = 0
         for point in keypoints:
             temp = ( point.pt, point.size, point.angle, point.response, point.octave, point.class_id, descriptors[i] )
-            ++i
+            i += 1
             result.append( temp )
 
         return result
@@ -111,7 +112,7 @@ class Image( object ):
     def _filterMatches( kp1, kp2, matches, ratio = 0.75 ):
         mkp1, mkp2 = [], []
         for m in matches:
-            if len( m ) == 2 and m[0].distance <= m[1].distance * ratio:
+            if len( m ) == 2 and m[0].distance < m[1].distance * ratio:
                 m = m[0]
                 mkp1.append( kp1[m.queryIdx] )
                 mkp2.append( kp2[m.trainIdx] )
