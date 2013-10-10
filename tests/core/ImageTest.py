@@ -206,7 +206,6 @@ class ImageTest( unittest.TestCase ):
 
         self.assertEquals( True, ps )
 
-
     def testLooksLikeTrueRDumpLoad( self ):
         img1 = Image.loadFromFile( "tests/core/dumps/1.dump" )
         img2 = Image.get( "tests/core/images/1.jpg" )
@@ -235,7 +234,7 @@ class ImageTest( unittest.TestCase ):
         ps = img1.looksLike( img2 )
 
         self.assertEquals( True, ps )
-    
+
 
 if __name__ == '__main__':
     unittest.main()

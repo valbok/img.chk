@@ -7,7 +7,6 @@
 import numpy
 import cv2
 import cPickle as pickle
-from matplotlib import pyplot as plt
 
 """
 " Base class to handle image comparisons
