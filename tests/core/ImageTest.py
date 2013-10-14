@@ -5,6 +5,7 @@
 """
 
 import unittest
+from unittest_data_provider import data_provider
 from core import *
 
 class ImageTest( unittest.TestCase ):
@@ -73,131 +74,42 @@ class ImageTest( unittest.TestCase ):
         f.close()
         self.assertEquals( lines, lines2 )
 
-    def testLooksLikeTrue( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/1.jpg" )
+    imgMatches = lambda: \
+                (
+                    ( "1_500.jpg", "1_500_bl.jpg", True ),
+                    ( "1_500.jpg", "1_500_bl2.jpg", True ),
+                    ( "1_500.jpg", "1_500_brb.jpg", True ),
+                    ( "1_500.jpg", "1_500_c1.jpg", True ),
+                    ( "1_500.jpg", "1_500_cr.jpg", True ),
+                    ( "1_500.jpg", "1_500_f.jpg", True ),
+                    ( "1_500.jpg", "1_500_left.jpg", True ),
+                    ( "1_500.jpg", "1_500_wb.jpg", True ),
+                    ( "1_500.jpg", "1_500_wl.jpg", True ),
+                    ( "1.jpg", "1.jpg", True ),
+                    ( "1.jpg", "1_500.jpg", True ),
+                    ( "1.jpg", "1_150.jpg", True ),
+                    ( "1.jpg", "2.jpg", False ),
+                    ( "1.jpg", "2_500.jpg", False ),
+                    ( "1.jpg", "3.jpg", False ),
+                    ( "1.jpg", "3_500.jpg", False ),
+                    ( "1.jpg", "4.jpg", False ),
+                    ( "1.jpg", "4_500.jpg", False ),
+                    ( "1.jpg", "5.jpg", False ),
+                    ( "1.jpg", "5_500.jpg", False ),
+                    ( "1.jpg", "6.jpg", False ),
+                    ( "1.jpg", "6_500.jpg", False ),
+                    ( "1.jpg", "7.jpg", False ),
+                    ( "1.jpg", "7_500.jpg", False ),
+
+                )
+
+    @data_provider( imgMatches )
+    def testLooksLike( self, f1, f2, e ):
+        img1 = Image.get( "tests/core/images/" + f1 )
+        img2 = Image.get( "tests/core/images/" + f2 )
         ps = img1.knnMatched( img2 )
 
-        self.assertEquals( True, ps )
-
-    def testLooksLikeTrue2( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/1_500.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( True, ps )
-
-    def testLooksLikeTrue3( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/1_150.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( True, ps )
-
-    def testLooksLikeTrue4( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/1_150_2.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( True, ps )
-
-    def testLooksLikeTrue500( self ):
-        img1 = Image.get( "tests/core/images/1_500.jpg" )
-        img2 = Image.get( "tests/core/images/1_150.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( True, ps )
-
-    def testLooksLikeTrueR( self ):
-        img1 = Image.get( "tests/core/images/1_500.jpg" )
-        img2 = Image.get( "tests/core/images/1.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( True, ps )
-
-    def testLooksLikeTrueR1( self ):
-        img1 = Image.get( "tests/core/images/1_150.jpg" )
-        img2 = Image.get( "tests/core/images/1.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( True, ps )
-
-    def testLooksLikeTrueR2( self ):
-        img1 = Image.get( "tests/core/images/1_150_2.jpg" )
-        img2 = Image.get( "tests/core/images/1.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( True, ps )
-
-    def testLooksLike( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/2.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
-
-    def testLooksLikeFalse( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/2_150.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
-
-    def testLooksLikeFalse1150( self ):
-        img1 = Image.get( "tests/core/images/1_150.jpg" )
-        img2 = Image.get( "tests/core/images/2.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
-
-    def testLooksLikeFalse11502( self ):
-        img1 = Image.get( "tests/core/images/1_150_2.jpg" )
-        img2 = Image.get( "tests/core/images/2.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
-
-    def testLooksLikeFalse1115022150( self ):
-        img1 = Image.get( "tests/core/images/1_150_2.jpg" )
-        img2 = Image.get( "tests/core/images/2_150.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
-
-    def testLooksLikeFalse1115022150( self ):
-        img1 = Image.get( "tests/core/images/1_150_2.jpg" )
-        img2 = Image.get( "tests/core/images/2.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
-
-    def testLooksLikeFalse13( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/3.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
-
-    def testLooksLikeFalse14( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/4.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
-
-    def testLooksLikeFalse34( self ):
-        img1 = Image.get( "tests/core/images/3.jpg" )
-        img2 = Image.get( "tests/core/images/4.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
-
-    def testLooksLikeTrue4500( self ):
-        img1 = Image.get( "tests/core/images/4.jpg" )
-        img2 = Image.get( "tests/core/images/4_500.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( True, ps )
+        self.assertEquals( e, ps )
 
     def testLoadFromFileSelf( self ):
         img1 = Image.loadFromFile( "tests/core/dumps/1.dump" )
@@ -234,13 +146,6 @@ class ImageTest( unittest.TestCase ):
         ps = img1.knnMatched( img2 )
 
         self.assertEquals( True, ps )
-
-    def testLooksLikeFalse5005( self ):
-        img1 = Image.get( "tests/core/images/1_500.jpg" )
-        img2 = Image.get( "tests/core/images/5.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
 
     def testDumpToFile5( self ):
         img1 = Image.get( "tests/core/images/5.jpg" )
@@ -297,13 +202,6 @@ class ImageTest( unittest.TestCase ):
             self.assertEquals( len( desc1 ), len( desc2 ) )
             for d in xrange( len( desc1 ) ):
                 self.assertEquals( desc1[d], desc2[d] )
-
-    def testLooksLikeFalse1150_6( self ):
-        img1 = Image.get( "tests/core/images/1_150.jpg" )
-        img2 = Image.get( "tests/core/images/6.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
 
     def testLooksLikeFalse1150_6_dump( self ):
         img1 = Image.get( "tests/core/images/1_150.jpg" )

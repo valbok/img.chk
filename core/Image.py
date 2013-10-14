@@ -138,7 +138,7 @@ class Image( object ):
     """
     " @return (float)
     """
-    def _compareKnnMatchInPercent( self, img ):
+    def _knnMatchInPercent( self, img ):
         pairs = self._knnMatch( img )
         l1 = len( self._keypoints )
         l2 = len( img._keypoints )
@@ -150,8 +150,8 @@ class Image( object ):
     """
     " @return (bool)
     """
-    def knnMatched( self, img ):
-        p12 = self._compareKnnMatchInPercent( img )
-        p21 = img._compareKnnMatchInPercent( self )
+    def knnMatched( self, img, p = 20 ):
+        p12 = self._knnMatchInPercent( img )
+        p21 = img._knnMatchInPercent( self )
 
-        return p12 > 40 or p21 > 40
+        return p12 > p or p21 > p
