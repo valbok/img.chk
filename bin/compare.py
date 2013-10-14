@@ -19,10 +19,9 @@ if __name__ == '__main__':
     d1 = sys.argv[1]
     d2 = sys.argv[2]
 
-    img1 = Image.loadFromFile( d1 )
-    img2 = Image.loadFromFile( d2 )
+    img1 = Image.get( d1 )
+    img2 = Image.get( d2 )
 
     if img1.looksLike( img2 ):
         print "looks like"
         sys.exit( 1 )
-
