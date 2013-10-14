@@ -120,7 +120,11 @@ class Image( object ):
 
         return pairs
 
-    def _match( self, img ):
+
+    """
+    " @return (DMatch, DMatch)
+    """
+    def _knnMatch( self, img ):
         matcher = cv2.BFMatcher( cv2.NORM_L2 )
         kp1 = self._keypoints
         desc1 = self._descriptors
@@ -134,8 +138,8 @@ class Image( object ):
     """
     " @return (float)
     """
-    def compareInPercent( self, img ):
-        pairs = self._match( img )
+    def _compareKnnMatchInPercent( self, img ):
+        pairs = self._knnMatch( img )
         l1 = len( self._keypoints )
         l2 = len( img._keypoints )
         lp = len( pairs )
@@ -146,8 +150,8 @@ class Image( object ):
     """
     " @return (bool)
     """
-    def looksLike( self, img ):
-        p12 = self.compareInPercent( img )
-        p21 = img.compareInPercent( self )
+    def knnMatched( self, img ):
+        p12 = self._compareKnnMatchInPercent( img )
+        p21 = img._compareKnnMatchInPercent( self )
 
         return p12 > 40 or p21 > 40
