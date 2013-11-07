@@ -4,4 +4,4 @@
 " @license GNU GPL v2
 """
 
-from Image import *
+from image import *

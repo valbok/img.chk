@@ -18,22 +18,10 @@ class ImageTest( unittest.TestCase ):
         img = Image.get( "tests/core/images/1.jpg" )
         self.assertEquals( True, isinstance( img, Image ) )
 
-    def testDumpToFile( self ):
-        img = Image.get( "tests/core/images/1.jpg" )
-        img.dumpToFile( "tests/core/dumps/1.dump" )
-
-        f = open( "tests/core/dumps/1.dump.exp" )
-        lines = f.readlines()
-        f.close()
-        f = open( "tests/core/dumps/1.dump" )
-        lines2 = f.readlines()
-        f.close()
-        self.assertEquals( lines, lines2 )
-
     def testDump( self ):
         img = Image.get( "tests/core/images/1.jpg" )
         lines = img.dump()
-        img = Image.load( lines )
+        img = img.load( lines )
         img.dumpToFile( "tests/core/dumps/1.dump.tmp" )
         f = open( "tests/core/dumps/1.dump.tmp" )
         lines = f.readlines()
@@ -47,7 +35,7 @@ class ImageTest( unittest.TestCase ):
     def testDumpIdentity( self ):
         img1 = Image.get( "tests/core/images/1.jpg" )
         lines = img1.dump()
-        img2 = Image.load( lines )
+        img2 = img1.load( lines )
         for i in xrange( len( img1._keypoints ) ):
             k1 = img1._keypoints[i]
             k2 = img2._keypoints[i]
@@ -63,17 +51,6 @@ class ImageTest( unittest.TestCase ):
             for d in xrange( len( desc1 ) ):
                 self.assertEquals( desc1[d], desc2[d] )
 
-    def testLoadFromFile( self ):
-        img = Image.loadFromFile( "tests/core/dumps/1.dump" )
-        f = open( "tests/core/dumps/1.dump.exp" )
-        lines = f.readlines()
-        f.close()
-        img.dumpToFile( "tests/core/dumps/1.dump" )
-        f = open( "tests/core/dumps/1.dump" )
-        lines2 = f.readlines()
-        f.close()
-        self.assertEquals( lines, lines2 )
-
     imgMatches = lambda: \
                 (
                     ( "1_500.jpg", "1_500_bl.jpg", True ),
@@ -85,6 +62,13 @@ class ImageTest( unittest.TestCase ):
                     ( "1_500.jpg", "1_500_left.jpg", True ),
                     ( "1_500.jpg", "1_500_wb.jpg", True ),
                     ( "1_500.jpg", "1_500_wl.jpg", True ),
+                    ( "1_500.jpg", "1_500_sh-100.jpg", True ),
+                    ( "1_500.jpg", "1_500_l+100.jpg", True ),
+                    #( "1_500.jpg", "1_500_inv.jpg", True ),
+                    ( "1_500.jpg", "1_500_brightness.jpg", True ),
+                    ( "1_500.jpg", "1_500_brightness-100.jpg", True ),
+                    ( "1_500.jpg", "1_500_contrast.jpg", True ),
+
                     ( "1.jpg", "1.jpg", True ),
                     ( "1.jpg", "1_500.jpg", True ),
                     ( "1.jpg", "1_150.jpg", True ),
@@ -100,6 +84,7 @@ class ImageTest( unittest.TestCase ):
                     ( "1.jpg", "6_500.jpg", False ),
                     ( "1.jpg", "7.jpg", False ),
                     ( "1.jpg", "7_500.jpg", False ),
+
                     ( "2.jpg", "1.jpg", False ),
                     ( "2.jpg", "1_500.jpg", False ),
                     ( "2.jpg", "2.jpg", True ),
@@ -200,106 +185,9 @@ class ImageTest( unittest.TestCase ):
 
         self.assertEquals( e, ps )
 
-    def testLoadFromFileSelf( self ):
-        img1 = Image.loadFromFile( "tests/core/dumps/1.dump" )
-        img2 = Image.loadFromFile( "tests/core/dumps/1.dump" )
-        ps = img1.knnMatched( img2 )
 
-        self.assertEquals( True, ps )
 
-    def testLooksLikeTrueRDumpLoad( self ):
-        img1 = Image.loadFromFile( "tests/core/dumps/1.dump" )
-        img2 = Image.get( "tests/core/images/1.jpg" )
-        ps = img1.knnMatched( img2 )
 
-        self.assertEquals( True, ps )
-
-    def testLooksLikeTrueRDump( self ):
-        img1 = Image.get( "tests/core/images/1.jpg" )
-        img2 = Image.get( "tests/core/images/1_150.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( True, ps )
-        img1.dumpToFile( "tests/core/dumps/tmp/1.dump" )
-        img2.dumpToFile( "tests/core/dumps/tmp/1_150.dump" )
-
-        img11 = Image.loadFromFile( "tests/core/dumps/tmp/1.dump" )
-        img22 = Image.loadFromFile( "tests/core/dumps/tmp/1_150.dump" )
-        ps = img11.knnMatched( img22 )
-
-        self.assertEquals( True, ps )
-
-    def testLooksLikeTrueRDumpLoad150( self ):
-        img1 = Image.loadFromFile( "tests/core/dumps/1_150.dump" )
-        img2 = Image.get( "tests/core/images/1_150.jpg" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( True, ps )
-
-    def testDumpToFile5( self ):
-        img1 = Image.get( "tests/core/images/5.jpg" )
-        ps = img1.dumpToFile( "tests/core/dumps/5.dump" )
-        f = open( "tests/core/dumps/5.dump.exp" )
-        lines = f.readlines()
-        f.close()
-        f = open( "tests/core/dumps/5.dump" )
-        lines2 = f.readlines()
-        f.close()
-        self.assertEquals( lines, lines2 )
-
-    def testLooksLikeFalseDump5005( self ):
-        img1 = Image.loadFromFile( "tests/core/dumps/1_500.dump" )
-        img2 = Image.loadFromFile( "tests/core/dumps/5.dump" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
-
-    def testDumpIdentity1_500( self ):
-        img1 = Image.get( "tests/core/images/1_500.jpg" )
-        img1.dumpToFile( "tests/core/dumps/1_500.dump.tmp" )
-        img2 = Image.loadFromFile( "tests/core/dumps/1_500.dump.tmp" )
-        for i in xrange( len( img1._keypoints ) ):
-            k1 = img1._keypoints[i]
-            k2 = img2._keypoints[i]
-            self.assertEquals( k1.pt, k2.pt )
-            self.assertEquals( k1.size, k2.size )
-            self.assertEquals( k1.angle, k2.angle )
-            self.assertEquals( k1.response, k2.response )
-            self.assertEquals( k1.octave, k2.octave )
-            self.assertEquals( k1.class_id, k2.class_id )
-            desc1 = img1._descriptors[i]
-            desc2 = img2._descriptors[i]
-            self.assertEquals( len( desc1 ), len( desc2 ) )
-            for d in xrange( len( desc1 ) ):
-                self.assertEquals( desc1[d], desc2[d] )
-
-    def testDumpToFile6( self ):
-        img1 = Image.get( "tests/core/images/6.jpg" )
-        img1.dumpToFile( "tests/core/dumps/6.dump" )
-        img2 = Image.loadFromFile( "tests/core/dumps/6.dump" )
-        for i in xrange( len( img1._keypoints ) ):
-            k1 = img1._keypoints[i]
-            k2 = img2._keypoints[i]
-            self.assertEquals( k1.pt, k2.pt )
-            self.assertEquals( k1.size, k2.size )
-            self.assertEquals( k1.angle, k2.angle )
-            self.assertEquals( k1.response, k2.response )
-            self.assertEquals( k1.octave, k2.octave )
-            self.assertEquals( k1.class_id, k2.class_id )
-            desc1 = img1._descriptors[i]
-            desc2 = img2._descriptors[i]
-            self.assertEquals( len( desc1 ), len( desc2 ) )
-            for d in xrange( len( desc1 ) ):
-                self.assertEquals( desc1[d], desc2[d] )
-
-    def testLooksLikeFalse1150_6_dump( self ):
-        img1 = Image.get( "tests/core/images/1_150.jpg" )
-        img1.dumpToFile( "tests/core/dumps/1_150.dump" )
-        img1 = Image.loadFromFile( "tests/core/dumps/1_150.dump" )
-        img2 = Image.loadFromFile( "tests/core/dumps/6.dump" )
-        ps = img1.knnMatched( img2 )
-
-        self.assertEquals( False, ps )
 
 if __name__ == '__main__':
     unittest.main()
