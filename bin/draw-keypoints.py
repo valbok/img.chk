@@ -6,9 +6,13 @@
 """
 
 """
+" Draws keypoints
 """
 import sys
-sys.path.append( "../" )
+import os
+parentdir = os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) )
+os.sys.path.insert( 0, parentdir )
+
 from core import *
 from matplotlib import pyplot as plt
 
@@ -19,6 +23,6 @@ if __name__ == '__main__':
     pathToImage = sys.argv[1]
     img = Image.get( pathToImage )
     kp = img._keypoints
-    img2 = cv2.drawKeypoints( img._img, kp, None, (255, 0, 0), 4 )
+    img2 = cv2.drawKeypoints( img._cv2_img, kp, None, (255, 0, 0), 4 )
 
     plt.imshow(img2),plt.show()
