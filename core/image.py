@@ -6,7 +6,7 @@
 
 import PIL
 from PIL import ImageStat
-import numpy
+import numpy as np
 import cv2
 import cPickle as pickle
 
@@ -17,6 +17,8 @@ class Image( object ):
     _filename = False
     _keypoints = []
     _descriptors = []
+    _img = False
+    _cv2_img = False
 
     def __init__( self, filename ):
         img = PIL.Image.open( filename )
@@ -30,10 +32,10 @@ class Image( object ):
     @staticmethod
     def get( filename ):
         img = Image( filename )
-        _img = cv2.imread( filename, 0 )
+        img._cv2_img = cv2.imread( filename, 0 )
 
         surf = cv2.SURF( 400 )
-        img._keypoints, img._descriptors = surf.detectAndCompute( _img, None )
+        img._keypoints, img._descriptors = surf.detectAndCompute( img._cv2_img, None )
 
         return img
 
@@ -58,7 +60,7 @@ class Image( object ):
             keypoints.append( temp_feature )
             descriptors.append( temp_descriptor )
 
-        return keypoints, numpy.array( descriptors )
+        return keypoints, np.array( descriptors )
 
     """
     " @return array
