@@ -28,10 +28,10 @@ if __name__ == '__main__':
         fn2 = None
 
     img1 = Image( fn1 )
-    hash1 = abs(img1.getPerceptualHash())
+    hash1 = abs( img1.getPerceptualHash() )
     print '%(hash)016x' %{"hash": hash1}
     if fn2 is not None:
         img2 = Image( fn2 )
-        hash2 = abs(img2.getPerceptualHash())
+        hash2 = abs( img2.getPerceptualHash() )
         print '%(hash)016x' %{"hash": hash2}
-        print fn1 + " and " + fn2 + " distance: " + str( Image.getHammingDistance( hash1, hash2 )) + " and " + str( ( ( 64 - Image.getHammingDistance( hash1, hash2 ) )  * 100.0 ) / 64.0 ) + "% similar."
+        print str( Image.getHammingDistance( hash1, hash2 )) + " and " + str( ( ( 64 - Image.getHammingDistance( hash1, hash2 ) )  * 100.0 ) / 64.0 ) + "% similar."
