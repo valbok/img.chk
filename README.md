@@ -1,9 +1,10 @@
 Image check tools
 -----------------
 
-Is supposed to use CBIR and CV technique
+Is supposed to use CBIR and CV techniques
 
 Example:
+
     img1 = Image.get( "tests/core/images/1.jpg" )
     img2 = Image.get( "tests/core/images/1_500_cr.jpg" ) # scaled image with copyright watermark
     h1 = img1.getPerceptualHash()
