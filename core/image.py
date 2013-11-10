@@ -164,11 +164,7 @@ class Image( object ):
     """
     def getAverageHash( self ):
         img = self._img.convert( "L" ).resize( (8, 8), PIL.Image.ANTIALIAS )
-
         averageValue = ImageStat.Stat( img ).mean[0]
-        # Go through the image pixel by pixel.
-        # Return 1-bits when the tone is equal to or above the average,
-        # and 0-bits when it's below the average.
         result = 0
         for row in xrange( 8 ):
             for col in xrange( 8 ):
@@ -182,26 +178,10 @@ class Image( object ):
     """
     def getDifferenceHash( self ):
         img = self._img.convert( "L" ).resize( (8, 8), PIL.Image.ANTIALIAS )
-
-	# Go through the image pixel by pixel.
-	# Return 1-bits when a pixel is equal to or brighter than the previous
-	# pixel, and 0-bits when it's below.
-
-        # Use the 64th pixel as the 0th pixel.
         previousPixel = img.getpixel( (7, 7) )
         result = 0
-        for row in xrange( 0, 8, 2 ):
-            # Go left to right on odd rows.
+        for row in xrange( 8 ):
             for col in xrange( 8 ):
-                result <<= 1
-                pixel = img.getpixel( (col, row) )
-                result |= 1 * ( pixel >= previousPixel )
-                previousPixel = pixel
-
-            row += 1
-
-            # Go right to left on even rows.
-            for col in xrange( 7, -1, -1 ):
                 result <<= 1
                 pixel = img.getpixel( (col, row) )
                 result |= 1 * ( pixel >= previousPixel )
