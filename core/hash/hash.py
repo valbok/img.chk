@@ -42,6 +42,13 @@ class Hash( object ):
         return self._value
 
     """
+    " @return Image
+    """
+    @property
+    def img( self ):
+        return self._img
+
+    """
     " @return string
     """
     def __str__( self ):

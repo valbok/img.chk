@@ -38,6 +38,9 @@ class Matcher( object ):
 
                 for h1 in hashes1:
                     for h2 in hashes2:
+                        if h1.__class__.__name__ != h2.__class__.__name__:
+                            continue
+
                         matched = h1 == h2 if distance == False else h1.distanceTo( h2 ) <= distance
                         if matched:
                             result.append( Match( h1, h2 ) )
