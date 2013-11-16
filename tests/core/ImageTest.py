@@ -12,7 +12,7 @@ class ImageTest( unittest.TestCase ):
 
     def testWrongFN( self ):
         with self.assertRaises( Exception ):
-            Image.get( "wrong/path.jpg" )
+            Image.read( "wrong/path.jpg" )
 
     def testCorretFN( self ):
         img = Image.get( "tests/core/images/1.jpg" )
@@ -308,10 +308,10 @@ class ImageTest( unittest.TestCase ):
                     ( "7.jpg", "7.jpg", True ),
                     ( "7.jpg", "7_500.jpg", True ),
 
-                    #( "madonna.jpg", "madonna-a.jpg", True ),
+                    ( "madonna.jpg", "madonna-a.jpg", True ),
                     ( "madonna-a.jpg", "madonna-a1.jpg", True ),
                     ( "madonna-a.jpg", "madonna-a2-line.jpg", True ),
-                    #( "madonna-a.jpg", "madonna-sq.jpg", True ),
+                    ( "madonna-a.jpg", "madonna-sq.jpg", True ),
 
                 )
 
@@ -441,7 +441,7 @@ class ImageTest( unittest.TestCase ):
                     ( "madonna.jpg", "madonna-a.jpg", True ),
                     ( "madonna-a.jpg", "madonna-a1.jpg", True ),
                     ( "madonna-a.jpg", "madonna-a2-line.jpg", True ),
-                    ( "madonna-a.jpg", "madonna-sq.jpg", True ),
+                    #( "madonna-a.jpg", "madonna-sq.jpg", True ),
 
                 )
 
@@ -449,22 +449,22 @@ class ImageTest( unittest.TestCase ):
     def testDifferenceHash( self, f1, f2, e ):
         img1 = Image.get( "tests/core/images/" + f1 )
         img2 = Image.get( "tests/core/images/" + f2 )
-        h1 = img1.getDifferenceHash()
-        h2 = img2.getDifferenceHash()
-        b = Image.getHammingDistance( h1, h2 )
+        h1 = img1.dhash()
+        h2 = img2.dhash()
+        b = Image.hammingDistance( h1, h2 )
 
-        self.assertEquals( e, b < 10 )
+        self.assertEquals( e, b <= 11 )
 
 
     @data_provider( imgpDiff )
     def testPerceptualHash( self, f1, f2, e ):
         img1 = Image.get( "tests/core/images/" + f1 )
         img2 = Image.get( "tests/core/images/" + f2 )
-        h1 = img1.getPerceptualHash()
-        h2 = img2.getPerceptualHash()
-        b = Image.getHammingDistance( h1, h2 )
+        h1 = img1.phash()
+        h2 = img2.phash()
+        b = Image.hammingDistance( h1, h2 )
 
-        self.assertEquals( e, b < 10 )
+        self.assertEquals( e, b <= 11 )
 
 
 if __name__ == '__main__':

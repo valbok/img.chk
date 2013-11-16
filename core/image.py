@@ -3,7 +3,6 @@
 " @copyright Copyright (C) 2013 VaL::bOK
 " @license GNU GPL v2
 """
-
 import PIL
 from PIL import ImageStat
 import numpy as np
@@ -14,30 +13,52 @@ import cPickle as pickle
 " Base class to handle image comparisons
 """
 class Image( object ):
-    _filename = False
     _keypoints = []
     _descriptors = []
     _img = False
-    _cv2_img = False
 
-    def __init__( self, filename ):
-        img = PIL.Image.open( filename )
-        img.load()
+    def __init__( self, img ):
         self._img = img
-        self._filename = filename
 
     """
     " @return Image
     """
     @staticmethod
     def get( filename ):
-        img = Image( filename )
-        img._cv2_img = cv2.imread( filename, 0 )
+        return Image.read( filename ).compute()
 
+    """
+    " @return Image
+    """
+    @staticmethod
+    def read( filename ):
+        i = cv2.imread( filename, 1 )
+        if i is None:
+            raise Exception( "Could not read file", filename )
+        i = Image( i )
+        i._filename = filename
+        return i
+
+    """
+    " @return self
+    """
+    def compute( self ):
         surf = cv2.SURF( 400 )
-        img._keypoints, img._descriptors = surf.detectAndCompute( img._cv2_img, None )
+        self._keypoints, self._descriptors = surf.detectAndCompute( self._img, None )
 
-        return img
+        return self
+
+    """
+    " @return Image
+    """
+    def toGrayscale( self ):
+        return Image( cv2.cvtColor( self._img, cv2.COLOR_BGR2GRAY ) )
+
+    """
+    " @return Image
+    """
+    def resize( self, size, inter = cv2.INTER_NEAREST ):
+        return Image( cv2.resize( self._img, size, interpolation=inter ) )
 
     @staticmethod
     def _toArray( keypoints, descriptors ):
@@ -123,7 +144,6 @@ class Image( object ):
 
         return pairs
 
-
     """
     " @return (DMatch, DMatch)
     """
@@ -162,8 +182,8 @@ class Image( object ):
     """
     " @return int
     """
-    def getAverageHash( self ):
-        img = self._img.convert( "L" ).resize( (8, 8), PIL.Image.ANTIALIAS )
+    def ahash( self ):
+        img = self.toGrayscale().resize( (8, 8) )
         averageValue = ImageStat.Stat( img ).mean[0]
         result = 0
         for row in xrange( 8 ):
@@ -176,29 +196,39 @@ class Image( object ):
     """
     " @return int
     """
-    def getDifferenceHash( self ):
-        img = self._img.convert( "L" ).resize( (8, 8), PIL.Image.ANTIALIAS )
-        previousPixel = img.getpixel( (7, 7) )
+    def pixel( self, x, y ):
+        return self._img[x,y]
+
+    """
+    " @return int
+    """
+    def dhash( self ):
+        img = self.toGrayscale().resize( (8, 8), cv2.INTER_AREA  )
+
+        previous = img.pixel( 7, 7 )
         result = 0
         for row in xrange( 8 ):
             for col in xrange( 8 ):
                 result <<= 1
-                pixel = img.getpixel( (col, row) )
-                result |= 1 * ( pixel >= previousPixel )
-                previousPixel = pixel
+                pixel = img.pixel( col, row )
+                result |= 1 * ( pixel >= previous )
+                previous = pixel
 
         return result
 
+    """
+    " @return int
+    """
     @staticmethod
-    def getHammingDistance( hash1, hash2 ):
+    def hammingDistance( hash1, hash2 ):
         return bin( hash1 ^ hash2 ).count( "1" )
 
     """
     " @return int
     """
-    def getPerceptualHash( self ):
-        img = self._img.convert( "L" ).resize( (32, 32), PIL.Image.ANTIALIAS )
-        imf = np.float32( img ) / 255.0
+    def phash( self ):
+        img = self.toGrayscale().resize( (32, 32), cv2.INTER_NEAREST )
+        imf = np.float32( img._img ) / 255.0
         dsty = cv2.dct( imf )[0:8]
         dst = []
         for i in xrange( len( dsty ) ):
