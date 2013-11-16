@@ -69,3 +69,4 @@ class Hash( object ):
     """
     def percentsTo( self, h ):
         return ( ( 64 - self.distanceTo( h ) )  * 100.0 ) / 64.0
+

@@ -8,3 +8,5 @@ from hash import *
 from phash import *
 from dhash import *
 from extractor import *
+from match import *
+from matcher import *

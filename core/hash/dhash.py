@@ -30,5 +30,8 @@ class DHash( Hash ):
 
         return result
 
+    """
+    " @return bool
+    """
     def __eq__( self, h ):
         return Hash.hammingDistance( self._value, h._value ) <= 11
