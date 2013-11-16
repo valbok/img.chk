@@ -28,10 +28,10 @@ if __name__ == '__main__':
         fn2 = None
 
     img1 = Image.read( fn1 )
-    hash1 = PHash( img1 )
+    hash1 = DHash( img1 )
     print hash1
     if fn2 is not None:
         img2 = Image.read( fn2 )
-        hash2 = PHash( img2 )
+        hash2 = DHash( img2 )
         print hash2
         print str( hash1.distanceTo( hash2 ) ) + " and " + str( hash1.percentsTo( hash2 ) ) + "% similar."

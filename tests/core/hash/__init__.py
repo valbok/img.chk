@@ -4,5 +4,6 @@
 " @license GNU GPL v2
 """
 
-from image import *
-from hash import *
+from phash import *
+from dhash import *
+from extractor import *

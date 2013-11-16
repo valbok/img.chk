@@ -4,4 +4,5 @@
 " @license GNU GPL v2
 """
 
-from ImageTest import *
+from image import *
+from hash import *
