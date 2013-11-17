@@ -35,9 +35,9 @@ class ImageExtractor( object ):
     " @param ()
     " @return Images[]
     """
-    def extract( self, krange = (0, 25) ):
+    def extract( self, krange = (0, 30) ):
         result = []
-        height, width, channel = self._img.shape()
+        height, width, channel = self._img.shape
         kp = self._keypoints
         klen = len( kp )
         hashes = []
@@ -48,7 +48,7 @@ class ImageExtractor( object ):
         Z = np.float32( Z )
         for clustersCount in xrange( krange[0], krange[1] ):
             if clustersCount == 0:
-                result.append( self._img )
+                result.append( self._img.parent( self._img, 0, 0 ) )
                 continue
 
             ret, label, center = cv2.kmeans( Z, K=clustersCount, criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_MAX_ITER, 1, 10), attempts=100, flags=cv2.KMEANS_PP_CENTERS )
@@ -64,27 +64,15 @@ class ImageExtractor( object ):
                 maX = max( v[0] for v in cluster )
                 maY = max( v[1] for v in cluster )
 
-                #print "miX", miX
-                #print "miY", miY
-                #print "maX", maX
-                #print "maY", maY
-
                 w = abs(maX - miX)
                 h = abs(maY - maX)
-                #print "w", w
-                #print "h", h
                 if h < 32 or w < 32:
                     continue
 
-                cy1 = miY
-                cy2 = maY
-                cx1 = miX
-                cx2 = maX
-
-                cropped = img[cy1:cy2, cx1:cx2]
-                if len( cropped ) == 0:
+                cropped = self._img.crop( miX, miY, maX, maY )
+                if not cropped or cropped.width < 32 or cropped.height < 32 :
                     continue
 
-                result.append( Image( cropped ) )
+                result.append( cropped )
 
         return result

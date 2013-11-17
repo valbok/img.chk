@@ -17,6 +17,12 @@ class Image( object ):
     _img = False
 
     """
+    " @var Image
+    " @see parent()
+    """
+    _parent = False
+
+    """
     " @param np.array
     """
     def __init__( self, img ):
@@ -48,8 +54,23 @@ class Image( object ):
     """
     " @return (height, width)
     """
+    @property
     def shape( self ):
         return self._img.shape
+
+    """
+    " @return int
+    """
+    @property
+    def width( self ):
+        return self.shape[1]
+
+    """
+    " @return int
+    """
+    @property
+    def height( self ):
+        return self.shape[0]
 
     """
     " @return np.array
@@ -63,3 +84,26 @@ class Image( object ):
     """
     def pixel( self, x, y ):
         return self._img[x,y]
+
+    """
+    " @return {img, x, y}
+    """
+    def parent( self, parent = False, x = False, y = False ):
+        if parent:
+            self._parent = {"img": parent, 'x': x, 'y': y}
+            return self
+
+        return self._parent
+
+    """
+    " @return Image
+    """
+    def crop( self, x1, y1, x2, y2 ):
+        cropped = self._img[y1:y2, x1:x2]
+        if len( cropped ) == 0:
+            return False
+
+        i = Image( cropped )
+        i.parent( self, x1, y1 )
+
+        return i

@@ -27,7 +27,7 @@ class Hash( object ):
         self._value = self._calculate()
 
     """
-    " Must be implemented in chinldren
+    " Must be implemented in children
     "
     " @return int
     """
@@ -76,4 +76,10 @@ class Hash( object ):
     """
     def percentsTo( self, h ):
         return ( ( 64 - self.distanceTo( h ) )  * 100.0 ) / 64.0
+
+    """
+    " @return {}
+    """
+    def dict( self ):
+        return {"hash": str( self ), "image": {"x": str( self.img.parent()["x"] ), "y": str( self.img.parent()["y"] ), "width": self.img.width, "height": self.img.height}}
 
