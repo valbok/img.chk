@@ -10,5 +10,5 @@ Example:
     img2 = Image.read( "tests/core/images/1_500_cr.jpg" ) # scaled image with copyright watermark
     h1 = PHash( img1 )
     h2 = PHash( img2 )
-    if h1 == h2 < 10:
+    if h1 == h2:
         print "is similar" # will print this
