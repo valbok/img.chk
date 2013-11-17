@@ -5,6 +5,7 @@
 """
 
 from hash import *
+from ahash import *
 from phash import *
 from dhash import *
 from extractor import *

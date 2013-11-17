@@ -9,24 +9,26 @@ import cv2
 from hash import *
 
 """
-" Implements difference hash
+" Implements average hash
 """
-class DHash( Hash ):
+class AHash( Hash ):
 
     """
     " @return int
     """
     def _calculate( self ):
         img = self._img.grayscale().resize( (8, 8), cv2.INTER_AREA )
+        averageValue = 0
+        for row in xrange( 8 ):
+            for col in xrange( 8 ):
+                averageValue += img.pixel( col, row )
 
-        previous = img.pixel( 7, 7 )
+        averageValue /= 64
         result = 0
         for row in xrange( 8 ):
             for col in xrange( 8 ):
                 result <<= 1
-                pixel = img.pixel( col, row )
-                result |= 1 * ( pixel >= previous )
-                previous = pixel
+                result |= 1 * ( img.pixel( col, row ) >= averageValue )
 
         return result
 
