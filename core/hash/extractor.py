@@ -35,7 +35,7 @@ class ImageExtractor( object ):
     " @param ()
     " @return Images[]
     """
-    def extract( self, krange = (2, 20) ):
+    def extract( self, krange = (0, 25) ):
         result = []
         height, width, channel = self._img.shape()
         kp = self._keypoints
@@ -47,6 +47,10 @@ class ImageExtractor( object ):
 
         Z = np.float32( Z )
         for clustersCount in xrange( krange[0], krange[1] ):
+            if clustersCount == 0:
+                result.append( self._img )
+                continue
+
             ret, label, center = cv2.kmeans( Z, K=clustersCount, criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_MAX_ITER, 1, 10), attempts=100, flags=cv2.KMEANS_PP_CENTERS )
 
             for k in xrange( clustersCount ):

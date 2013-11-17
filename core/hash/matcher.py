@@ -4,6 +4,7 @@
 " @license GNU GPL v2
 """
 
+from ahash import *
 from dhash import *
 from phash import *
 from match import *
@@ -18,7 +19,7 @@ class Matcher( object ):
     """
     " @param Image
     """
-    def __init__( self, hashes = [PHash, DHash] ):
+    def __init__( self, hashes = [PHash, DHash, AHash] ):
         self._hashes = hashes
 
     """
