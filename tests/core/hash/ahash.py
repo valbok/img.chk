@@ -146,7 +146,7 @@ class AHashTest( unittest.TestCase ):
                     ( "madonna.jpg", "madonna-a.jpg", True ),
                     ( "madonna-a.jpg", "madonna-a1.jpg", True ),
                     ( "madonna-a.jpg", "madonna-a2-line.jpg", True ),
-                    #( "madonna-a.jpg", "madonna-sq.jpg", True ),
+                    ( "madonna-a.jpg", "madonna-sq.jpg", True ),
 
                 )
 
@@ -159,7 +159,7 @@ class AHashTest( unittest.TestCase ):
         h2 = AHash( img2 )
 
         self.assertEquals( e, h1 == h2 )
-        self.assertEquals( e, h1.distanceTo( h2 ) <= 11 )
+        self.assertEquals( e, h1.distanceTo( h2 ) <= 10 )
 
 
 if __name__ == '__main__':

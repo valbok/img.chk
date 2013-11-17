@@ -36,4 +36,4 @@ class AHash( Hash ):
     " @return bool
     """
     def __eq__( self, h ):
-        return self.distanceTo( h ) <= 11
+        return self.distanceTo( h ) <= 10
