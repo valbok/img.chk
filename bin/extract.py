@@ -29,11 +29,11 @@ if __name__ == '__main__':
     result = {'AHash': {}, 'DHash': {}, 'PHash': {}}
     for ii in xrange( len(imgs1) ):
         i = imgs1[ii]
-        #a = AHash( i )
-        #d = DHash( i )
+        a = AHash( i )
+        d = DHash( i )
         p = PHash( i )
-        #result['AHash'][str( a )] = a.dict()
-        #result['DHash'][str( d )] = d.dict()
+        result['AHash'][str( a )] = a.dict()
+        result['DHash'][str( d )] = d.dict()
         result['PHash'][str( p )] = p.dict()
 
     print json.dumps( result )
