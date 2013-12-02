@@ -9,7 +9,7 @@ import cv2
 from core import *
 
 """
-" Extracts sub images
+" Extracts sub images from an image
 """
 class ImageExtractor( object ):
 
@@ -35,7 +35,7 @@ class ImageExtractor( object ):
     " @param ()
     " @return Images[]
     """
-    def extract( self, krange = (0, 30) ):
+    def extract( self, krange = (0, 20) ):
         result = []
         height, width, channel = self._img.shape
         kp = self._keypoints
@@ -46,31 +46,48 @@ class ImageExtractor( object ):
             Z.append( [k.pt[0], k.pt[1]] )
 
         Z = np.float32( Z )
+
         for clustersCount in xrange( krange[0], krange[1] ):
             if clustersCount == 0:
                 result.append( self._img.parent( self._img, 0, 0 ) )
                 continue
 
-            ret, label, center = cv2.kmeans( Z, K=clustersCount, criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_MAX_ITER, 1, 10), attempts=100, flags=cv2.KMEANS_PP_CENTERS )
-
+            ret, label, center = cv2.kmeans( Z, K=clustersCount, criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_MAX_ITER , 1, 10), attempts=100, flags=cv2.KMEANS_PP_CENTERS )
             for k in xrange( clustersCount ):
-                img = self._img.img.copy()
-
-                cluster = Z[label.ravel()==k]
                 centroid = center[k]
+                img = self._img
+                cluster = Z[label.ravel()==k]
 
                 miX = min( v[0] for v in cluster )
                 miY = min( v[1] for v in cluster )
                 maX = max( v[0] for v in cluster )
                 maY = max( v[1] for v in cluster )
 
-                w = abs(maX - miX)
-                h = abs(maY - maX)
-                if h < 32 or w < 32:
-                    continue
+                dmiX = int( centroid[0] - miX );
+                dmiY = int( centroid[1] - miY );
+                dmaX = int( centroid[0] + maX );
+                dmaY = int( centroid[1] + maY );
 
-                cropped = self._img.crop( miX, miY, maX, maY )
-                if not cropped or cropped.width < 32 or cropped.height < 32 :
+                # This is a magic which helps to compare subimages using hashes
+                while dmiX % 8 != 0:
+                    dmiX -= 1
+
+                while dmaX % 8 != 0:
+                    dmaX += 1
+
+                while dmiY % 8 != 0:
+                    dmiY -= 1
+
+                while dmaY % 8 != 0:
+                    dmaY += 1
+
+                miX = dmiX
+                maX = dmaX
+                miY = dmiY
+                maY = dmaY
+
+                cropped = img.crop( miX, miY, maX, maY )
+                if not cropped or cropped.width < 32 or cropped.height < 32:
                     continue
 
                 result.append( cropped )

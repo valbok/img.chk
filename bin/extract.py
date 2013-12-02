@@ -6,12 +6,13 @@
 """
 
 """
-" ?
+" Extractes hashes from an image
 """
 import sys
 import os
 parentdir = os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) )
 os.sys.path.insert( 0, parentdir )
+from matplotlib import pyplot as plt
 
 import json
 from core import *
@@ -25,44 +26,14 @@ if __name__ == '__main__':
     cv = cv2.SURF( 400 )
     kp1 = cv.detect( img1.img, None )
     imgs1 = ImageExtractor( img1, kp1 ).extract()
-    try:
-        fn2 = sys.argv[2]
-    except Exception:
-        fn2 = None
+    result = {'AHash': {}, 'DHash': {}, 'PHash': {}}
+    for ii in xrange( len(imgs1) ):
+        i = imgs1[ii]
+        #a = AHash( i )
+        #d = DHash( i )
+        p = PHash( i )
+        #result['AHash'][str( a )] = a.dict()
+        #result['DHash'][str( d )] = d.dict()
+        result['PHash'][str( p )] = p.dict()
 
-    if fn2 is None:
-        result = {'AHash': [], 'DHash': [], 'PHash': []}
-        for i in imgs1:
-            result['AHash'].append( AHash( i ).dict() )
-            result['DHash'].append( DHash( i ).dict() )
-            result['PHash'].append( PHash( i ).dict() )
-
-        print json.dumps( result )
-        sys.exit()
-
-    print "imgs1 len", len(imgs1)
-    img2 = Image.read( fn2 )
-    kp2 = cv.detect( img2.img, None )
-    imgs2 = ImageExtractor( img2, kp2 ).extract()
-    print "imgs2 len", len(imgs2)
-
-    matches = Matcher().match( imgs1, imgs2 )
-
-    print len(matches)
-    d = [m.type for m in matches if m.type == "DHash"]
-    a = [m.type for m in matches if m.type == "AHash"]
-    p = [m.type for m in matches if m.type == "PHash"]
-    print "a", len(a)
-    print "d", len(d)
-    print "p", len(p)
-
-    for k in xrange( len(matches) ):
-        m = matches[k]
-        i1 = m.hashes[0].img.img
-        i2 = m.hashes[1].img.img
-        path1 = '1/' + str(k) + "-" + m.type + '.jpg'
-        path2 = '2/' + str(k) + "-" + m.type + '.jpg'
-        cv2.imwrite(path1,i1)
-        cv2.imwrite(path2,i2)
-
-
+    print json.dumps( result )

@@ -14,6 +14,9 @@ from match import *
 """
 class Matcher( object ):
 
+    """
+    " @var []
+    """
     _hashes = []
 
     """

@@ -81,5 +81,4 @@ class Hash( object ):
     " @return {}
     """
     def dict( self ):
-        return {"hash": str( self ), "image": {"x": str( self.img.parent()["x"] ), "y": str( self.img.parent()["y"] ), "width": self.img.width, "height": self.img.height}}
-
+        return {"x": str( self.img.parent()["x"] ), "y": str( self.img.parent()["y"] ), "width": self.img.width, "height": self.img.height}
