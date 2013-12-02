@@ -7,6 +7,7 @@
 import numpy as np
 import cv2
 from hash import *
+from numpy import int64
 
 """
 " Implements perceptual hash using DCT
@@ -35,7 +36,7 @@ class PHash( Hash ):
                 a += y[i]
 
         median = a / c
-        result = 0
+        result = int64()
         for row in xrange( 8 ):
             for col in xrange( 8 ):
                 result <<= 1
@@ -48,6 +49,3 @@ class PHash( Hash ):
     """
     def __eq__( self, h ):
         return self.distanceTo( h ) <= 11
-
-
-

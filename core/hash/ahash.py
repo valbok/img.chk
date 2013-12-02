@@ -7,6 +7,7 @@
 import numpy as np
 import cv2
 from hash import *
+from numpy import int64
 
 """
 " Implements average hash
@@ -24,7 +25,7 @@ class AHash( Hash ):
                 averageValue += img.pixel( col, row )
 
         averageValue /= 64
-        result = 0
+        result = int64()
         for row in xrange( 8 ):
             for col in xrange( 8 ):
                 result <<= 1

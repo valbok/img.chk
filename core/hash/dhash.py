@@ -7,6 +7,7 @@
 import numpy as np
 import cv2
 from hash import *
+from numpy import int64
 
 """
 " Implements difference hash
@@ -20,7 +21,7 @@ class DHash( Hash ):
         img = self._img.grayscale().resize( (8, 8), cv2.INTER_AREA )
 
         previous = img.pixel( 7, 7 )
-        result = 0
+        result = int64()
         for row in xrange( 8 ):
             for col in xrange( 8 ):
                 result <<= 1
