@@ -6,6 +6,8 @@ The main feature is to extract fingerprints from an image that can be stored in 
 
 Since our hash is just unsigned 64-bit integer we could store it into database and use a function like [BIT_COUNT](http://dev.mysql.com/doc/refman/5.0/en/bit-functions.html#function_bit-count) to calculate [Hamming distance](http://en.wikipedia.org/wiki/Hamming_Distance).
 
+    SELECT * FROM image_hash WHERE BIT_COUNT( 0x2f1f76767e5e7f33 ^ hash ) <= 10
+
 Requires OpenCV.
 
 [Example](https://github.com/valbok/img.chk/blob/master/bin/example.py):
