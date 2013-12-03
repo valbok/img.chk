@@ -1,8 +1,11 @@
 Image check tools
 -----------------
 
-Is supposed to use CBIR and other CV techniques.
-Requires opencv lib.
+Content-based image retrieval implementation based on perceptual hashes used to find similar or duplicates images.
+The main feature is to extract fingerprints from an image that can be stored in a database and can be matched/found using simple SQL.
+
+
+Requires OpenCV.
 
 
 [Example](https://github.com/valbok/img.chk/blob/master/bin/example.py):
