@@ -2,7 +2,7 @@ Image check tools
 -----------------
 
 Content-based image retrieval implementation based on perceptual hashes used to find similar or duplicates images.
-The main feature is to extract fingerprints from an image that can be stored in a database and can be matched/found using simple SQL.
+The main feature is to extract fingerprints from an image that can be stored in a database and can be matched/found using simple SQL query.
 
 
 Requires OpenCV.
