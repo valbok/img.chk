@@ -1,8 +1,8 @@
 Image check tools
 -----------------
 
-Content-based image retrieval implementation based on perceptual hashes used to find similar or duplicates images.
-The main feature is to extract fingerprints from an image that can be stored in a database and can be matched/found using simple SQL query.
+[Content-based image retrieval](http://en.wikipedia.org/wiki/Content-based_image_retrieval) implementation based on perceptual hashes used to find similar or duplicates images.
+The main feature is to extract fingerprints from an image that can be stored in a database and can be matched/fetched using simple SQL query.
 
 Since our hash is just unsigned 64-bit integer we could store it into database and use a function like [BIT_COUNT](http://dev.mysql.com/doc/refman/5.0/en/bit-functions.html#function_bit-count) to calculate [Hamming distance](http://en.wikipedia.org/wiki/Hamming_Distance).
 
