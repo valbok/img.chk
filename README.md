@@ -4,9 +4,9 @@ Image check tools
 Content-based image retrieval implementation based on perceptual hashes used to find similar or duplicates images.
 The main feature is to extract fingerprints from an image that can be stored in a database and can be matched/found using simple SQL query.
 
+Since our hash is just unsigned 64-bit integer we could store it into database and use a function like MySQL [BIT_COUNT](http://dev.mysql.com/doc/refman/5.0/en/bit-functions.html#function_bit-count) to calculate [Hamming distance](http://en.wikipedia.org/wiki/Hamming_Distance)
 
 Requires OpenCV.
-
 
 [Example](https://github.com/valbok/img.chk/blob/master/bin/example.py):
 
