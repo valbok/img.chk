@@ -45,13 +45,7 @@ Proof of concept
 
 You need to be logged in.
 
-* Crop and hacks to an image:
-
-http://artonym.net/find/duplicates/80454a83-madonna.jpg
-
-http://artonym.net/find/duplicates/80454a83-madonna-a1.jpg
-
-http://artonym.net/find/duplicates/80454a83-madonna-a2-line.jpg
+* Crop:
 
 http://artonym.net/find/duplicates/80454a83-madonna-cropped-face.jpg
 
@@ -59,9 +53,15 @@ http://artonym.net/find/duplicates/80454a83-madonna-cropped-face2.jpg
 
 http://artonym.net/find/duplicates/80454a83-madonna-cropped-vertical.jpg
 
-http://artonym.net/find/duplicates/80454a83-madonna-sq.jpg
+* Color, brightness, contrast and other hacks:
 
-* Color, brightness, contrast etc and small hacks:
+http://artonym.net/find/duplicates/80454a83-madonna.jpg
+
+http://artonym.net/find/duplicates/80454a83-madonna-a1.jpg
+
+http://artonym.net/find/duplicates/80454a83-madonna-a2-line.jpg
+
+http://artonym.net/find/duplicates/80454a83-madonna-sq.jpg
 
 http://artonym.net/find/duplicates/80454a83-1_150.jpg
 
