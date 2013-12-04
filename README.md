@@ -39,3 +39,60 @@ Requires OpenCV.
     matches = Matcher( [PHash] ).match( imgs1, imgs2 )
 
     assert( len( matches ) > 10 )
+    
+Proof of concept
+-----------------
+
+You need to be logged in.
+
+* Crop and hacks to an image:
+
+http://artonym.net/find/duplicates/80454a83-madonna.jpg
+
+http://artonym.net/find/duplicates/80454a83-madonna-a1.jpg
+
+http://artonym.net/find/duplicates/80454a83-madonna-a2-line.jpg
+
+http://artonym.net/find/duplicates/80454a83-madonna-cropped-face.jpg
+
+http://artonym.net/find/duplicates/80454a83-madonna-cropped-face2.jpg
+
+http://artonym.net/find/duplicates/80454a83-madonna-cropped-vertical.jpg
+
+http://artonym.net/find/duplicates/80454a83-madonna-sq.jpg
+
+* Color, brightness, contrast etc and small hacks:
+
+http://artonym.net/find/duplicates/80454a83-1_150.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_bl.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_bl2.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_brb.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_brightness-100.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_brightness.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_c1.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_contrast.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_cr.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_f.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_inv.jpg negative
+
+http://artonym.net/find/duplicates/80454a83-1_500_l+100.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_left.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_sh-100.jpg
+
+http://artonym.net/find/duplicates/80454a83-1_500_wb.jpg negative
+
+http://artonym.net/find/duplicates/80454a83-1_500_wl.jpg
+
+
