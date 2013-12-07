@@ -7,17 +7,6 @@ Requires OpenCV.
 
 The main feature is to extract fingerprints from an image that can be stored in a database and can be matched/fetched using simple SQL query.
 
-Since our hash is just unsigned 64-bit integer we could store it into database and use a function like [BIT_COUNT](http://dev.mysql.com/doc/refman/5.0/en/bit-functions.html#function_bit-count) to calculate [Hamming distance](http://en.wikipedia.org/wiki/Hamming_Distance).
-
-    SELECT * FROM image_hash WHERE BIT_COUNT( 0x2f1f76767e5e7f33 ^ hash ) <= 10
-
-But this is quite expensive operation and could take a lot of time.
-
-Current implementation extracts around 200 hashes per an image.
-For example in case of 1000 image set in database to find a duplicate using just SQL query with BIT_COUNT function could take not less than 3 seconds.
-Using custom implementation of hamming distance as MySQL extension takes almost the same time or even worse.
-So decided to implement calculation of hamming distance in C++ and it decreased matching time twice.
-
 [Example](https://github.com/valbok/img.chk/blob/master/bin/example.py):
 
     # Scaled and copyrighted image
@@ -50,6 +39,18 @@ So decided to implement calculation of hamming distance in C++ and it decreased 
 
 Proof of concept
 -----------------
+
+Since our hash is just unsigned 64-bit integer we could store it into database and use a function like [BIT_COUNT](http://dev.mysql.com/doc/refman/5.0/en/bit-functions.html#function_bit-count) to calculate [Hamming distance](http://en.wikipedia.org/wiki/Hamming_Distance).
+
+    SELECT * FROM image_hash WHERE BIT_COUNT( 0x2f1f76767e5e7f33 ^ hash ) <= 10
+
+But this is quite expensive operation and could take a lot of time.
+
+Current implementation extracts around 200 hashes per an image.
+For example in case of 1000 image set in database to find a duplicate using just SQL query with BIT_COUNT function could take not less than 3 seconds.
+Using custom implementation of hamming distance as MySQL extension takes almost the same time or even worse.
+So decided to implement calculation of hamming distance in C++ and it decreased matching time twice.
+
 
 www.artonym.net contains around 1 300 indexed images and it is around 260 000 hashes.
 To find duplicate images by one image need to do around 52 000 000 operations of hamming distance calculations.
