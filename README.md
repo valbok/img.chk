@@ -1,7 +1,7 @@
 Image check tools
 -----------------
 
-[Content-based image retrieval](http://en.wikipedia.org/wiki/Content-based_image_retrieval) implementation based on perceptual hashes used to find duplicates images.
+[Content-based image retrieval](http://en.wikipedia.org/wiki/Content-based_image_retrieval) implementation based on perceptual hashes mostly used to find duplicate images.
 
 Requires OpenCV.
 
