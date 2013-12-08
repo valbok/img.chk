@@ -52,8 +52,8 @@ Using custom implementation of hamming distance as MySQL extension takes almost 
 So decided to implement calculation of hamming distance in C++ and it decreased matching time twice.
 
 
-www.artonym.net contains around 1 300 indexed images and it is around 260 000 hashes.
-To find duplicate images by one image need to do around 52 000 000 operations of hamming distance calculations.
+www.artonym.net contains ~1 300 indexed images and it is ~260 000 hashes.
+To find duplicate images by one image need to do ~52 000 000 operations of hamming distance calculations.
 The simplest our C++ implementation takes ~1 second to match hashes.
 To filter false positive matches using python script could take one second more.
 
