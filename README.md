@@ -65,6 +65,8 @@ http://artonym.net/find/duplicates/80454a83-madonna-cropped-face2.jpg
 
 http://artonym.net/find/duplicates/80454a83-madonna-cropped-vertical.jpg
 
+http://artonym.net/find/duplicates/84f171b5-apits010.jpg
+
 * Color, brightness, contrast and other hacks:
 
 http://artonym.net/find/duplicates/80454a83-madonna.jpg
