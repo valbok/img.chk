@@ -7,14 +7,13 @@ Since our hash is just unsigned 64-bit integer we could store it into database a
 
 But this is quite expensive operation and could take a lot of time.
 
-Current implementation extracts around 200 hashes per an image.
-For example in case of 1000 image set in database to find a duplicate using just SQL query with BIT_COUNT function could take not less than 3 seconds.
+Current implementation extracts around 50 hashes per an image.
+For example in case of 1000 image set in database to find a duplicate using just SQL query with BIT_COUNT function could take not less than 2 seconds.
 Using custom implementation of hamming distance as MySQL extension takes almost the same time or even worse.
 So decided to implement calculation of hamming distance in C++ and it decreased matching time twice.
 
-
-www.artonym.net contains ~1 300 indexed images and it is ~260 000 hashes.
-To find duplicate images by one image need to do ~52 000 000 operations of hamming distance calculations.
+www.artonym.net contains 1 235 indexed images and it is 85 465 hashes.
+To find duplicate images by one image need to do 4 273 250 operations of hamming distance calculations.
 The simplest our C++ implementation takes ~1 second to match hashes.
 To filter false positive matches using python script could take one second more.
 
