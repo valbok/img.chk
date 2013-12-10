@@ -25,14 +25,12 @@ if __name__ == '__main__':
     cv = cv2.SURF( 400 )
     kp1 = cv.detect( img1.img, None )
     imgs1 = ImageExtractor( img1, kp1 ).extract()
-    result = {'AHash': {}, 'DHash': {}, 'PHash': {}}
-    for ii in xrange( len(imgs1) ):
-        i = imgs1[ii]
-        a = AHash( i )
-        d = DHash( i )
-        p = PHash( i )
-        result['AHash'][str( a )] = a.dict()
-        result['DHash'][str( d )] = d.dict()
-        result['PHash'][str( p )] = p.dict()
+    matcher = Matcher( [PHash] )
+    result = {'PHash': {}}
+    phs = {}
+    hashes = matcher.hashes( imgs1 )[PHash]
+    for h in hashes:
+        phs[str( h )] = h.dict()
 
+    result['PHash'] = phs
     print json.dumps( result )

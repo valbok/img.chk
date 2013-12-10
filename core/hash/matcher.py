@@ -30,23 +30,37 @@ class Matcher( object ):
     """
     def match( self, imgs1, imgs2, distance = False ):
         result = []
-        for i1 in imgs1:
-            hashes1 = []
-            for h in self._hashes:
-                hashes1.append( h( i1 ) )
+        hashes1 = self.hashes( imgs1 )
+        hashes2 = self.hashes( imgs2 )
+        for ht in hashes1:
+            hs1 = hashes1[ht]
+            hs2 = hashes2[ht]
+            for h1 in hs1:
+                for h2 in hs2:
+                    matched = h1 == h2 if distance == False else h1.distanceTo( h2 ) <= distance
+                    if matched:
+                        result.append( Match( h1, h2 ) )
 
-            for i2 in imgs2:
-                hashes2 = []
-                for h in self._hashes:
-                    hashes2.append( h( i2 ) )
+        return result
 
-                for h1 in hashes1:
-                    for h2 in hashes2:
-                        if h1.__class__.__name__ != h2.__class__.__name__:
-                            continue
+    """
+    " Excludes duplicates
+    "
+    " @return {}
+    " @example print Matcher( PHash ).hashes( imgs1 )[PHash]
+    """
+    def hashes( self, imgs ):
+        result = {h:[] for h in self._hashes}
+        for h in self._hashes:
+            for i in imgs:
+                hash = h( i )
+                found = False
+                for sh in result[h]:
+                    if sh == hash:
+                        found = True
+                        break
 
-                        matched = h1 == h2 if distance == False else h1.distanceTo( h2 ) <= distance
-                        if matched:
-                            result.append( Match( h1, h2 ) )
+                if not found:
+                    result[h].append( hash )
 
         return result

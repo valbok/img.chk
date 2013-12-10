@@ -23,6 +23,7 @@ if __name__ == '__main__':
     fn1 = sys.argv[1]
     img1 = Image.read( fn1 )
     cv = cv2.SURF( 400 )
+    matcher = Matcher( [PHash] )
     kp1 = cv.detect( img1.img, None )
     imgs1 = ImageExtractor( img1, kp1 ).extract()
 
@@ -35,7 +36,7 @@ if __name__ == '__main__':
 
     print "imgs2 len", len(imgs2)
 
-    matches = Matcher( [PHash] ).match( imgs1, imgs2 )
+    matches = matcher.match( imgs1, imgs2 )
 
     print len(matches)
 
