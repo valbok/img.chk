@@ -58,10 +58,19 @@ class ImageExtractor( object ):
                 img = self._img
                 cluster = Z[label.ravel()==k]
 
-                miX = min( v[0] for v in cluster )
-                miY = min( v[1] for v in cluster )
-                maX = max( v[0] for v in cluster )
-                maY = max( v[1] for v in cluster )
+                miX = miY = 99999
+                maX = maY = 0
+                for v in cluster:
+                    x = v[0]
+                    y = v[1]
+                    if x < miX:
+                        miX = x
+                    if y < miY:
+                        miY = y
+                    if x > maX:
+                        maX = x
+                    if y > maY:
+                        maY = y
 
                 dmiX = int( centroid[0] - miX );
                 dmiY = int( centroid[1] - miY );
