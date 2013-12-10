@@ -50,8 +50,11 @@ class Matcher( object ):
     " @example print Matcher( PHash ).hashes( imgs1 )[PHash]
     """
     def hashes( self, imgs ):
-        result = {h:[] for h in self._hashes}
+        result = {}
         for h in self._hashes:
+            if h not in result:
+                result[h] = []
+
             for i in imgs:
                 hash = h( i )
                 found = False
