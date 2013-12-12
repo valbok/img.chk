@@ -43,3 +43,33 @@ if __name__ == '__main__':
     matches = Matcher( [PHash] ).match( imgs1, imgs2 )
 
     assert( len( matches ) > 10 )
+
+    # Face with closed eyes and text
+    img1 = Image.read( "../tests/core/images/madonna-bad-girl.jpg" )
+    # Painted the same face without text
+    img2 = Image.read( "../tests/core/images/madonna-pop-art.jpg" )
+
+    kp1 = cv.detect( img1.img, None )
+    kp2 = cv.detect( img2.img, None )
+
+    imgs1 = ImageExtractor( img1, kp1 ).extract()
+    imgs2 = ImageExtractor( img2, kp2 ).extract()
+
+    matches = Matcher( [PHash] ).match( imgs1, imgs2 )
+
+    # It found some matches
+    assert( len( matches ) > 0 )
+
+    img1 = Image.read( "../tests/core/images/lenna.png" )
+    # Totally different image
+    img2 = Image.read( "../tests/core/images/3_500.jpg" )
+
+    kp1 = cv.detect( img1.img, None )
+    kp2 = cv.detect( img2.img, None )
+
+    imgs1 = ImageExtractor( img1, kp1 ).extract()
+    imgs2 = ImageExtractor( img2, kp2 ).extract()
+
+    matches = Matcher( [PHash] ).match( imgs1, imgs2 )
+
+    assert( len( matches ) == 0 )
