@@ -37,22 +37,6 @@ The main feature is to extract fingerprints from an image that can be stored in 
 
     assert( len( matches ) > 10 )
 
-    # Face with closed eyes and text
-    img1 = Image.read( "../tests/core/images/madonna-bad-girl.jpg" )
-    # Painted the same face without text
-    img2 = Image.read( "../tests/core/images/madonna-pop-art.jpg" )
-
-    kp1 = cv.detect( img1.img, None )
-    kp2 = cv.detect( img2.img, None )
-
-    imgs1 = ImageExtractor( img1, kp1 ).extract()
-    imgs2 = ImageExtractor( img2, kp2 ).extract()
-
-    matches = Matcher( [PHash] ).match( imgs1, imgs2 )
-
-    # It found some matches
-    assert( len( matches ) > 0 )
-
     img1 = Image.read( "../tests/core/images/lenna.png" )
     # Totally different image
     img2 = Image.read( "../tests/core/images/3_500.jpg" )
@@ -66,3 +50,37 @@ The main feature is to extract fingerprints from an image that can be stored in 
     matches = Matcher( [PHash] ).match( imgs1, imgs2 )
 
     assert( len( matches ) == 0 )
+
+Also it should be noted about Random Number Generator that is used in cv.kmeans using KMEANS_PP_CENTERS.
+Each time when ImageExtractor().extract() is called using the same data different centroids will be generated.
+That means that on each iteration extracted images will differ. It may produce wrong results within matching.
+
+Following example shows how RNG may affect to matching.
+There are 2 different images but with the same content. First image is a photo, second is a painted version of this photo.
+
+For example first iteration did not return matched images at all.
+But second returns 2 matches:
+
+    cv = cv2.SURF( 400 )
+
+    # Face with closed eyes and text
+    img1 = Image.read( "../tests/core/images/madonna-bad-girl.jpg" )
+    # Painted the same face without text
+    img2 = Image.read( "../tests/core/images/madonna-cropped-face2.jpg" )
+
+    kp1 = cv.detect( img1.img, None )
+    kp2 = cv.detect( img2.img, None )
+
+    # NOTE: Due to RNG extracted images are different per each iteration
+    matches = []
+    i = 0
+    while len( matches ) == 0:
+        imgs1 = ImageExtractor( img1, kp1 ).extract()
+        imgs2 = ImageExtractor( img2, kp2 ).extract()
+        matches = Matcher( [PHash] ).match( imgs1, imgs2 )
+        i += 1
+
+    print "Found", len( matches ), "matches on", i, "iteration"
+
+
+
