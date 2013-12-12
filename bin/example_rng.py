@@ -29,10 +29,11 @@ if __name__ == '__main__':
     # NOTE: Due to RNG extracted images are different per each iteration
     matches = []
     i = 0
+    e1 = ImageExtractor( img1, kp1 )
+    e2 = ImageExtractor( img2, kp2 )
+    m = Matcher( [PHash] )
     while len( matches ) == 0:
-        imgs1 = ImageExtractor( img1, kp1 ).extract()
-        imgs2 = ImageExtractor( img2, kp2 ).extract()
-        matches = Matcher( [PHash] ).match( imgs1, imgs2 )
+        matches = m.match( e1.extract(), e2.extract())
         i += 1
 
     print "Found", len( matches ), "matches on", i, "iteration"

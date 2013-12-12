@@ -58,8 +58,8 @@ That means that on each iteration extracted images will differ. It may produce w
 Following sample shows how RNG may affect to matching.
 There are 2 different images but with the same content. First image is a photo, second is a painted version of this photo.
 
-For example first iteration did not return matched images at all.
-But second returns 2 matches:
+For example, if cv2.kmeans has 100 attempts, first iteration did not return matched images at all,
+but second returns 2 matches:
 
     cv = cv2.SURF( 400 )
 
