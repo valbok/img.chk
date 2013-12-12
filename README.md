@@ -55,7 +55,7 @@ Also it should be noted about Random Number Generator that is used in cv.kmeans 
 Each time when ImageExtractor().extract() is called using the same data different centroids will be generated.
 That means that on each iteration extracted images will differ. It may produce wrong results within matching.
 
-Following example shows how RNG may affect to matching.
+Following sample shows how RNG may affect to matching.
 There are 2 different images but with the same content. First image is a photo, second is a painted version of this photo.
 
 For example first iteration did not return matched images at all.
