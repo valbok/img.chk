@@ -39,8 +39,6 @@ class ImageExtractor( object ):
         result = []
         height, width, channel = self._img.shape
         kp = self._keypoints
-        klen = len( kp )
-        hashes = []
         Z = []
         for k in kp:
             Z.append( [k.pt[0], k.pt[1]] )
