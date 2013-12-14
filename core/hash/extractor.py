@@ -35,7 +35,7 @@ class ImageExtractor( object ):
     " @param ()
     " @return Images[]
     """
-    def extract( self, krange = (0, 30), attempts = 10 ):
+    def extract( self, krange = (0, 20), attempts = 100, multiples= ((8, 8), (8, 8)) ):
         result = []
         height, width, channel = self._img.shape
         kp = self._keypoints
@@ -76,16 +76,16 @@ class ImageExtractor( object ):
                 dmaY = int( centroid[1] + maY );
 
                 # This is a magic which helps to compare subimages using hashes
-                while dmiX % 8 != 0:
+                while dmiX % multiples[0][0] != 0:
                     dmiX -= 1
 
-                while dmaX % 8 != 0:
-                    dmaX += 1
-
-                while dmiY % 8 != 0:
+                while dmiY % multiples[0][1] != 0:
                     dmiY -= 1
 
-                while dmaY % 8 != 0:
+                while dmaX % multiples[1][0] != 0:
+                    dmaX += 1
+
+                while dmaY % multiples[1][1] != 0:
                     dmaY += 1
 
                 miX = dmiX
