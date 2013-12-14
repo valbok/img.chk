@@ -66,7 +66,7 @@ but second returns 2 matches:
     # Face with closed eyes and text
     img1 = Image.read( "../tests/core/images/madonna-bad-girl.jpg" )
     # Painted the same face without text
-    img2 = Image.read( "../tests/core/images/madonna-cropped-face2.jpg" )
+    img2 = Image.read( "../tests/core/images/madonna-pop-art.jpg" )
 
     kp1 = cv.detect( img1.img, None )
     kp2 = cv.detect( img2.img, None )
