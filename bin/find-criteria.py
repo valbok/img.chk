@@ -50,11 +50,11 @@ if __name__ == '__main__':
             mx = 0
             mxi = {}
 
-            t = 4800
+            t = 2640
             i = 0
 
             for d in xrange( 8, 11 ):
-                for k in xrange( 20, 40 ):
+                for k in xrange( 20, 31 ):
                     for a in xrange( 10, 110, 10 ):
                         for m in xrange( 1, 9 ):
                             imgs1 = ImageExtractor( img1, kp1 ).extract( (0, k), a, ((m,m),(m,m)) )

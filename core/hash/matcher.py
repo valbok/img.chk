@@ -28,7 +28,7 @@ class Matcher( object ):
     """
     " @return Match[]
     """
-    def match( self, imgs1, imgs2, distance = False ):
+    def match( self, imgs1, imgs2, distance = None ):
         result = []
         hashes1 = self.hashes( imgs1 )
         hashes2 = self.hashes( imgs2 )
@@ -37,7 +37,7 @@ class Matcher( object ):
             hs2 = hashes2[ht]
             for h1 in hs1:
                 for h2 in hs2:
-                    matched = h1 == h2 if distance == False else h1.distanceTo( h2 ) <= distance
+                    matched = h1 == h2 if distance == None else h1.distanceTo( h2 ) <= distance
                     if matched:
                         result.append( Match( h1, h2 ) )
 
