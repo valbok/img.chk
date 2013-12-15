@@ -50,17 +50,17 @@ if __name__ == '__main__':
             mx = 0
             mxi = {}
 
-            t = 3080
+            t = 1050
             i = 0
 
-            for k in xrange( 20, 31 ):
+            for k in xrange( 20, 32, 2 ):
                 for m in xrange( 2, 9 ):
                     for a in xrange( 10, 110, 20 ):
 
                         imgs1 = ImageExtractor( img1, kp1 ).extract( (0, k), a, ((m,m),(m,m)) )
                         imgs2 = ImageExtractor( img2, kp2 ).extract( (0, k), a, ((m,m),(m,m)) )
 
-                        for d in xrange( 0, 8 ):
+                        for d in xrange( 0, 6 ):
                             matches = matcher.match( imgs1, imgs2, d )
                             if len( matches ) > mx:
                                 mx = len( matches )
