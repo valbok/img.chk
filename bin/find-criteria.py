@@ -56,10 +56,10 @@ if __name__ == '__main__':
             for k in xrange( 20, 31 ):
                 for a in xrange( 10, 120, 20 ):
                     for m in xrange( 2, 9 ):
-                        for d in xrange( 0, 8 ):
-                            imgs1 = ImageExtractor( img1, kp1 ).extract( (0, k), a, ((m,m),(m,m)) )
-                            imgs2 = ImageExtractor( img2, kp2 ).extract( (0, k), a, ((m,m),(m,m)) )
+                        imgs1 = ImageExtractor( img1, kp1 ).extract( (0, k), a, ((m,m),(m,m)) )
+                        imgs2 = ImageExtractor( img2, kp2 ).extract( (0, k), a, ((m,m),(m,m)) )
 
+                        for d in xrange( 0, 8 ):
                             matches = matcher.match( imgs1, imgs2, d )
                             if len( matches ) > mx:
                                 mx = len( matches )
