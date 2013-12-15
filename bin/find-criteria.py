@@ -70,4 +70,4 @@ if __name__ == '__main__':
                             sys.stdout.flush()
                             i += 1
 
-            print "\t\t",mxi
+            print "\t\t",mx, mxi
