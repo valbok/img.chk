@@ -54,8 +54,9 @@ if __name__ == '__main__':
             i = 0
 
             for k in xrange( 20, 31 ):
-                for a in xrange( 10, 120, 20 ):
-                    for m in xrange( 2, 9 ):
+                for m in xrange( 2, 9 ):
+                    for a in xrange( 10, 120, 20 ):
+
                         imgs1 = ImageExtractor( img1, kp1 ).extract( (0, k), a, ((m,m),(m,m)) )
                         imgs2 = ImageExtractor( img2, kp2 ).extract( (0, k), a, ((m,m),(m,m)) )
 
