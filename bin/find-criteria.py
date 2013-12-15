@@ -50,7 +50,7 @@ if __name__ == '__main__':
             mx = 0
             mxi = {}
 
-            t = 1050
+            t = 1260
             i = 0
 
             for k in xrange( 20, 32, 2 ):
