@@ -50,9 +50,12 @@ if __name__ == '__main__':
             mx = 0
             mxi = {}
 
-            for d in xrange( 0, 10 ):
-                for k in xrange( 10, 40 ):
-                    for a in xrange( 10, 105, 5 ):
+            t = 4800
+            i = 0
+
+            for d in xrange( 8, 11 ):
+                for k in xrange( 20, 40 ):
+                    for a in xrange( 10, 110, 10 ):
                         for m in xrange( 1, 9 ):
                             imgs1 = ImageExtractor( img1, kp1 ).extract( (0, k), a, ((m,m),(m,m)) )
                             imgs2 = ImageExtractor( img2, kp2 ).extract( (0, k), a, ((m,m),(m,m)) )
@@ -62,5 +65,9 @@ if __name__ == '__main__':
                                 mx = len( matches )
                                 mxi = {"d":d, "k": k, "a": a, "m": m}
 
+                            st = '\r' + str((i/t)*100) + "% " + str(i) + "/" + str(t)
+                            sys.stdout.write( st )
+                            sys.stdout.flush()
+                            i += 1
 
             print "\t\t",mxi
