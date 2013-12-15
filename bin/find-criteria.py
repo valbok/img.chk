@@ -65,7 +65,7 @@ if __name__ == '__main__':
                                 mx = len( matches )
                                 mxi = {"d":d, "k": k, "a": a, "m": m}
 
-                            st = '\r' + str((i/t)*100) + "% " + str(i) + "/" + str(t)
+                            st = '\r' + str(int((float(i)/t)*100)) + "% " + str(i) + "/" + str(t)
                             sys.stdout.write( st )
                             sys.stdout.flush()
                             i += 1
