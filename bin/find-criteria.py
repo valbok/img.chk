@@ -46,7 +46,7 @@ if __name__ == '__main__':
             img2 = t["img"]
             kp2 = t["kp"]
             fn2 = t["fn"]
-            print "\t",fn1
+            print "\t",fn2
             mx = 0
             mxi = {}
 
