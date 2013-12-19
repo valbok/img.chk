@@ -24,7 +24,7 @@ if __name__ == '__main__':
     img1 = Image.read( fn1 )
     cv = cv2.SURF( 400 )
     kp1 = cv.detect( img1.img, None )
-    imgs1 = ImageExtractor( img1, kp1 ).extract( (0,28), 30, ((2,2),(2,2)) )
+    imgs1 = ImageExtractor( img1, kp1 ).extract( (0,30), 100, ((4,4),(4,4)) )
     matcher = Matcher( [PHash] )
     result = {'PHash': {}}
     phs = {}
