@@ -35,7 +35,7 @@ class ImageExtractor( object ):
     " @param ()
     " @return Images[]
     """
-    def extract( self, krange = (0, 20), attempts = 100, multiples= ((8, 8), (8, 8)) ):
+    def extract( self, krange = (0, 30), attempts = 100, multiples= ((4, 4), (4, 4)) ):
         result = []
         height, width, channel = self._img.shape
         kp = self._keypoints
@@ -70,10 +70,10 @@ class ImageExtractor( object ):
                     if y > maY:
                         maY = y
 
-                dmiX = int( centroid[0] - miX );
-                dmiY = int( centroid[1] - miY );
-                dmaX = int( centroid[0] + maX );
-                dmaY = int( centroid[1] + maY );
+                dmiX = int( centroid[0] - miX )
+                dmiY = int( centroid[1] - miY )
+                dmaX = int( abs(centroid[0] - maX) )
+                dmaY = int( abs(centroid[1] - maY) )
 
                 # This is a magic which helps to compare subimages using hashes
                 while dmiX % multiples[0][0] != 0:
@@ -88,10 +88,10 @@ class ImageExtractor( object ):
                 while dmaY % multiples[1][1] != 0:
                     dmaY += 1
 
-                miX = dmiX
-                maX = dmaX
-                miY = dmiY
-                maY = dmaY
+                miX = int( centroid[0] - dmiX )
+                miY = int( centroid[1] - dmiY )
+                maX = int( centroid[0] + dmaX )
+                maY = int( centroid[1] + dmaY )
 
                 cropped = img.crop( miX, miY, maX, maY )
                 if not cropped or cropped.width < 32 or cropped.height < 32:
