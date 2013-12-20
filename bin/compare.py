@@ -13,7 +13,6 @@ import os
 parentdir = os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) )
 os.sys.path.insert( 0, parentdir )
 
-import json
 from core import *
 
 if __name__ == '__main__':
@@ -22,23 +21,27 @@ if __name__ == '__main__':
 
     fn1 = sys.argv[1]
     img1 = Image.read( fn1 )
-    cv = cv2.SURF( 400 )
+    surf = cv2.SURF( 400 )
     matcher = Matcher( [PHash] )
-    kp1 = cv.detect( img1.img, None )
+    kp1 = surf.detect( img1.img, None )
     k = 30
-    a = 100
-    m = 4
-    d = 7
-    imgs1 = ImageExtractor( img1, kp1 ).extract( (0,k), a, ((m,m),(m,m)) )
+    a = 10
+    m = 32
+    d = 8
+
+    imgs1 = ImageExtractor( img1, kp1 ).extract( (0,k), a, (32,32) )
+    matcher = Matcher( [PHash] )
 
     print "imgs1 len", len( imgs1 )
+    print len( matcher.hashes( imgs1 )[PHash] )
 
     fn2 = sys.argv[2]
     img2 = Image.read( fn2 )
-    kp2 = cv.detect( img2.img, None )
-    imgs2 = ImageExtractor( img2, kp2 ).extract((0,k), a, ((m,m),(m,m)) )
+    kp2 = surf.detect( img2.img, None )
 
+    imgs2 = ImageExtractor( img2, kp2 ).extract( (0,k), a, (32,32) )
     print "imgs2 len", len(imgs2)
+    print len(matcher.hashes( imgs2 )[PHash])
 
     matches = matcher.match( imgs1, imgs2, d )
 

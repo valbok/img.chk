@@ -7,6 +7,7 @@
 import numpy as np
 import cv2
 from core import *
+from matplotlib import pyplot as plt
 
 """
 " Extracts sub images from an image
@@ -35,7 +36,7 @@ class ImageExtractor( object ):
     " @param ()
     " @return Images[]
     """
-    def extract( self, krange = (0, 30), attempts = 100, multiples= ((4, 4), (4, 4)) ):
+    def extract( self, krange = (0, 30), attempts = 10, multiples = (32, 32) ):
         result = []
         height, width, channel = self._img.shape
         kp = self._keypoints
@@ -59,8 +60,9 @@ class ImageExtractor( object ):
                 miX = miY = 99999
                 maX = maY = 0
                 for v in cluster:
-                    x = v[0]
-                    y = v[1]
+                    x = int( v[0] )
+                    y = int( v[1] )
+
                     if x < miX:
                         miX = x
                     if y < miY:
@@ -70,31 +72,26 @@ class ImageExtractor( object ):
                     if y > maY:
                         maY = y
 
-                dmiX = int( centroid[0] - miX )
-                dmiY = int( centroid[1] - miY )
-                dmaX = int( abs(centroid[0] - maX) )
-                dmaY = int( abs(centroid[1] - maY) )
+                t = True
 
-                # This is a magic which helps to compare subimages using hashes
-                while dmiX % multiples[0][0] != 0:
-                    dmiX -= 1
+                while ( maX - miX ) % multiples[0] != 0:
+                    if t:
+                        miX -= 1
+                    else:
+                        maX += 1
 
-                while dmiY % multiples[0][1] != 0:
-                    dmiY -= 1
+                    t = not t
 
-                while dmaX % multiples[1][0] != 0:
-                    dmaX += 1
+                while ( maY - miY ) % multiples[1] != 0:
+                    if t:
+                        miY -= 1
+                    else:
+                        maY += 1
 
-                while dmaY % multiples[1][1] != 0:
-                    dmaY += 1
-
-                miX = int( centroid[0] - dmiX )
-                miY = int( centroid[1] - dmiY )
-                maX = int( centroid[0] + dmaX )
-                maY = int( centroid[1] + dmaY )
+                    t = not t
 
                 cropped = img.crop( miX, miY, maX, maY )
-                if not cropped or cropped.width < 32 or cropped.height < 32:
+                if not cropped or cropped.width < 64 or cropped.height < 64:
                     continue
 
                 result.append( cropped )
