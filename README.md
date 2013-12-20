@@ -1,7 +1,7 @@
 Image check tools
 -----------------
 
-[Content-based image retrieval](http://en.wikipedia.org/wiki/Content-based_image_retrieval) implementation based on perceptual hashes mostly used to find duplicate images.
+Prototype of [Content-based image retrieval](http://en.wikipedia.org/wiki/Content-based_image_retrieval) based on perceptual hashes mostly used to find duplicate images.
 
 Requires OpenCV.
 
@@ -81,6 +81,3 @@ but second returns 2 matches:
         i += 1
 
     print "Found", len( matches ), "matches on", i, "iteration"
-
-
-
