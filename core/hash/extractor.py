@@ -7,7 +7,6 @@
 import numpy as np
 import cv2
 from core import *
-from matplotlib import pyplot as plt
 
 """
 " Extracts sub images from an image
