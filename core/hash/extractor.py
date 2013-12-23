@@ -24,12 +24,18 @@ class ImageExtractor( object ):
     _keypoints = []
 
     """
+    " @var []
+    """
+    _descriptors = []
+
+    """
     " @param Image
     " @param []
     """
-    def __init__( self, img, keypoints ):
+    def __init__( self, img, keypoints, descriptors = [] ):
         self._img = img
         self._keypoints = keypoints
+        self._descriptors = descriptors
 
     """
     " @param ()
@@ -94,5 +100,30 @@ class ImageExtractor( object ):
                     continue
 
                 result.append( cropped )
+
+        return result
+
+    """
+    " @return []
+    """
+    def extractDescImages( self ):
+        result = []
+        for ds in self._descriptors:
+            row = []
+            col = []
+            x = 0
+            for d in ds:
+                x += 1
+                v = abs( d )
+                row.append( (v,v,v) )
+
+                if x > 15:
+                    x = 0
+                    col.append( row )
+                    row = []
+
+            im = np.float32( col )
+            img = Image( im )
+            result.append( img )
 
         return result
