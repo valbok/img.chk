@@ -49,7 +49,7 @@ class Matcher( object ):
     " @return {}
     " @example print Matcher( PHash ).hashes( imgs1 )[PHash]
     """
-    def hashes( self, imgs ):
+    def hashes( self, imgs, checkDuplicates = True ):
         result = {}
         for h in self._hashes:
             if h not in result:
@@ -58,10 +58,11 @@ class Matcher( object ):
             for i in imgs:
                 hash = h( i )
                 found = False
-                for sh in result[h]:
-                    if sh == hash:
-                        found = True
-                        break
+                if checkDuplicates:
+                    for sh in result[h]:
+                        if sh == hash:
+                            found = True
+                            break
 
                 if not found:
                     result[h].append( hash )

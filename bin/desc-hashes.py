@@ -28,7 +28,7 @@ if __name__ == '__main__':
     imgs = e.descImages()
     result = {'DHash': {}}
     matcher = Matcher( [DHash] )
-    hashes = matcher.hashes( imgs )[DHash]
+    hashes = matcher.hashes( imgs, False )[DHash]
     phs = {}
     for h in hashes:
         phs[str( h )] = h.dict()
