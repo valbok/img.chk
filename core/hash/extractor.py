@@ -119,7 +119,6 @@ class Extractor( object ):
         lkp = len( kp )
         for ki in xrange( lkp ):
             k = kp[ki]
-            Z.append( [k.pt[0], k.pt[1]] )
             ds = desc[ki]
             rs = [ds[i:i + 4] for i in range( 0, len( ds ), 4 )]
 

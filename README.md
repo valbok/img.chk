@@ -29,8 +29,8 @@ The main feature is to extract fingerprints from an image that can be stored in 
     kp2 = cv.detect( img2.img, None )
 
     # Extract sub images
-    imgs1 = ImageExtractor( img1, kp1 ).extract()
-    imgs2 = ImageExtractor( img2, kp2 ).extract()
+    imgs1 = Extractor( img1, kp1 ).subImages()
+    imgs2 = Extractor( img2, kp2 ).subImages()
 
     # Match only PHash hashes
     matches = Matcher( [PHash] ).match( imgs1, imgs2 )
@@ -44,8 +44,8 @@ The main feature is to extract fingerprints from an image that can be stored in 
     kp1 = cv.detect( img1.img, None )
     kp2 = cv.detect( img2.img, None )
 
-    imgs1 = ImageExtractor( img1, kp1 ).extract()
-    imgs2 = ImageExtractor( img2, kp2 ).extract()
+    imgs1 = Extractor( img1, kp1 ).subImages()
+    imgs2 = Extractor( img2, kp2 ).subImages()
 
     matches = Matcher( [PHash] ).match( imgs1, imgs2 )
 
@@ -75,8 +75,8 @@ but second returns 2 matches:
     matches = []
     i = 0
     while len( matches ) == 0:
-        imgs1 = ImageExtractor( img1, kp1 ).extract()
-        imgs2 = ImageExtractor( img2, kp2 ).extract()
+        imgs1 = Extractor( img1, kp1 ).subImages()
+        imgs2 = Extractor( img2, kp2 ).subImages()
         matches = Matcher( [PHash] ).match( imgs1, imgs2 )
         i += 1
 
