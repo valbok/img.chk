@@ -37,7 +37,7 @@ function getHammingDistance( $hash1, $hash2 )
  */
 function extractHashes( $path )
 {
-    $command = 'python extract.py ' . $path;
+    $command = 'python hashes.py ' . $path;
     $output = array();
     $r = 0;
 

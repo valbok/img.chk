@@ -111,61 +111,51 @@ class Extractor( object ):
     """
     " @return []
     """
-    def descImages( self, draw = False ):
+    def descImages( self ):
         result = []
         Z = []
         kp = self._keypoints
         desc = self._descriptors
         lkp = len( kp )
-        kdesc = {}
         for ki in xrange( lkp ):
             k = kp[ki]
             Z.append( [k.pt[0], k.pt[1]] )
             ds = desc[ki]
-            kdesc[(k.pt[0], k.pt[1])] = [(d*255,d*255,d*255) for d in ds]
+            rs = [ds[i:i + 4] for i in range( 0, len( ds ), 4 )]
 
-        Z = np.float32( Z )
-        clustersCount = int( len( Z ) / 8 )
-        attempts = 100
-        ret, label, center = cv2.kmeans( Z, K=clustersCount, criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_MAX_ITER , 1, 10), attempts=attempts, flags=cv2.KMEANS_PP_CENTERS )
-        for k in xrange( clustersCount ):
-            centroid = center[k]
-            cluster = Z[label.ravel()==k]
-            block = []
-            for c in cluster:
-                ds = kdesc[(c[0],c[1])]
-                rs = [ds[i:i+4] for i in range(0, len(ds), 4)]
+            b = []
+            row = []
+            rows = []
+            t = True
+            for r in rs:
+                if not t:
+                    r = r[::-1]
 
+                b.append( r )
+                t = not t
+                if not t:
+                    continue
+
+                row.append( b )
                 b = []
+                res = []
+                if len( row ) != 4:
+                    continue
+
+                res1=[]
+                res2=[]
+                for rr in row:
+                    for bb in rr[0]:
+                        res1.append( bb )
+                    for bb in rr[1]:
+                        res2.append( bb )
+
+                rows.append( res1 )
+                rows.append( res2 )
                 row = []
-                rows = []
-                t = True
-                for r in rs:
-                    if not t:
-                        r.reverse()
-                    b.append( r )
-                    t = not t
-                    if t:
-                        row.append( b )
-                        b = []
-                        res = []
-                        if len(row) == 4:
-                            res1=[]
-                            res2=[]
-                            for r in row:
 
-                                for bb in r[0]:
-                                    res1.append(bb)
-                                for bb in r[1]:
-                                    res2.append(bb)
-
-                            rows.append(res1)
-                            rows.append(res2)
-                            row = []
-
-
-                im = np.float32( rows )
-                img = Image( im )
-                result.append( img )
+            im = np.float32( rows )
+            img = Image( im )
+            result.append( img )
 
         return result

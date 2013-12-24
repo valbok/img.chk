@@ -25,7 +25,7 @@ if __name__ == '__main__':
     cv = cv2.SURF( 400 )
     kp,desc = cv.detectAndCompute( img.img, None )
     e = Extractor( img, kp, desc )
-    imgs = e.descImages( False )
+    imgs = e.descImages()
     result = {'DHash': {}}
     matcher = Matcher( [DHash] )
     hashes = matcher.hashes( imgs )[DHash]

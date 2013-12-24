@@ -18,7 +18,12 @@ class AHash( Hash ):
     " @return int
     """
     def _calculate( self ):
-        img = self._img.grayscale().resize( (8, 8), cv2.INTER_AREA )
+        g = type(self._img.pixel( 0, 0 )) == np.ndarray
+        img = self._img
+        if g:
+            img = img.grayscale()
+
+        img = img.resize( (8, 8), cv2.INTER_AREA )
         averageValue = 0
         for row in xrange( 8 ):
             for col in xrange( 8 ):
