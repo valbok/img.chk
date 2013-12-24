@@ -24,14 +24,14 @@ if __name__ == '__main__':
     img = Image.read( fn )
     cv = cv2.SURF( 400 )
     kp,desc = cv.detectAndCompute( img.img, None )
-    e = ImageExtractor( img, kp, desc )
-    imgs = e.extractDescImages()
-    result = {'PHash': {}}
-    matcher = Matcher( [PHash] )
-    hashes = matcher.hashes( imgs )[PHash]
+    e = Extractor( img, kp, desc )
+    imgs = e.descImages( False )
+    result = {'DHash': {}}
+    matcher = Matcher( [DHash] )
+    hashes = matcher.hashes( imgs )[DHash]
     phs = {}
     for h in hashes:
         phs[str( h )] = h.dict()
 
-    result['PHash'] = phs
+    result['DHash'] = phs
     print json.dumps( result )

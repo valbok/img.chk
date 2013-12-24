@@ -7,11 +7,12 @@
 import numpy as np
 import cv2
 from core import *
+from matplotlib import pyplot as plt
 
 """
 " Extracts sub images from an image
 """
-class ImageExtractor( object ):
+class Extractor( object ):
 
     """
     " @var Image
@@ -31,6 +32,7 @@ class ImageExtractor( object ):
     """
     " @param Image
     " @param []
+    " @param []
     """
     def __init__( self, img, keypoints, descriptors = [] ):
         self._img = img
@@ -41,7 +43,7 @@ class ImageExtractor( object ):
     " @param ()
     " @return Images[]
     """
-    def extract( self, krange = (0, 30), attempts = 10, multiples = (32, 32) ):
+    def subImages( self, krange = (0, 20), attempts = 100, multiples = 8 ):
         result = []
         height, width, channel = self._img.shape
         kp = self._keypoints
@@ -77,26 +79,30 @@ class ImageExtractor( object ):
                     if y > maY:
                         maY = y
 
-                t = True
+                dmiX = int( centroid[0] - miX );
+                dmiY = int( centroid[1] - miY );
+                dmaX = int( centroid[0] + maX );
+                dmaY = int( centroid[1] + maY );
 
-                while ( maX - miX ) % multiples[0] != 0:
-                    if t:
-                        miX -= 1
-                    else:
-                        maX += 1
+                while dmiX % multiples != 0:
+                    dmiX -= 1
 
-                    t = not t
+                while dmaX % multiples != 0:
+                    dmaX += 1
 
-                while ( maY - miY ) % multiples[1] != 0:
-                    if t:
-                        miY -= 1
-                    else:
-                        maY += 1
+                while dmiY % multiples != 0:
+                    dmiY -= 1
 
-                    t = not t
+                while dmaY % multiples != 0:
+                    dmaY += 1
+
+                miX = dmiX
+                maX = dmaX
+                miY = dmiY
+                maY = dmaY
 
                 cropped = img.crop( miX, miY, maX, maY )
-                if not cropped or cropped.width < 64 or cropped.height < 64:
+                if not cropped or cropped.width < 32 or cropped.height < 32:
                     continue
 
                 result.append( cropped )
@@ -106,24 +112,61 @@ class ImageExtractor( object ):
     """
     " @return []
     """
-    def extractDescImages( self ):
+    def descImages( self, draw = False ):
         result = []
-        for ds in self._descriptors:
-            row = []
-            col = []
-            x = 0
-            for d in ds:
-                x += 1
-                v = abs( d )
-                row.append( (v,v,v) )
+        Z = []
+        kp = self._keypoints
+        desc = self._descriptors
+        lkp = len( kp )
+        kdesc = {}
+        for ki in xrange( lkp ):
+            k = kp[ki]
+            Z.append( [k.pt[0], k.pt[1]] )
+            ds = desc[ki]
+            kdesc[(k.pt[0], k.pt[1])] = [(d*255,d*255,d*255) for d in ds]
 
-                if x > 15:
-                    x = 0
-                    col.append( row )
-                    row = []
+        Z = np.float32( Z )
+        clustersCount = int( len( Z ) / 8 )
+        attempts = 100
+        ret, label, center = cv2.kmeans( Z, K=clustersCount, criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_MAX_ITER , 1, 10), attempts=attempts, flags=cv2.KMEANS_PP_CENTERS )
+        for k in xrange( clustersCount ):
+            centroid = center[k]
+            cluster = Z[label.ravel()==k]
+            block = []
+            for c in cluster:
+                ds = kdesc[(c[0],c[1])]
+                rs = [ds[i:i+4] for i in range(0, len(ds), 4)]
 
-            im = np.float32( col )
-            img = Image( im )
-            result.append( img )
+                b = []
+                row = []
+                rows = []
+                t = True
+                for r in rs:
+                    if not t:
+                        r.reverse()
+                    b.append( r )
+                    t = not t
+                    if t:
+                        row.append( b )
+                        b = []
+                        res = []
+                        if len(row) == 4:
+                            res1=[]
+                            res2=[]
+                            for r in row:
+
+                                for bb in r[0]:
+                                    res1.append(bb)
+                                for bb in r[1]:
+                                    res2.append(bb)
+
+                            rows.append(res1)
+                            rows.append(res2)
+                            row = []
+
+
+                im = np.float32( rows )
+                img = Image( im )
+                result.append( img )
 
         return result

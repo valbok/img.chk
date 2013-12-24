@@ -84,11 +84,11 @@ if ( !$hs1 or !$hs2 )
 }
 
 $matched = array();
-print "[" . count( $hs1['PHash'] ) . "] $fn1\n";
-print "[" . count( $hs2['PHash'] ) . "] $fn2\n";
-foreach ( $hs1['PHash'] as $h1 )
+print "[" . count( $hs1['DHash'] ) . "] $fn1\n";
+print "[" . count( $hs2['DHash'] ) . "] $fn2\n";
+foreach ( $hs1['DHash'] as $h1 )
 {
-    foreach( $hs2['PHash'] as $h2 )
+    foreach( $hs2['DHash'] as $h2 )
     {
         $d = getHammingDistance( $h1, $h2 );
         if ( $d <= $hd )

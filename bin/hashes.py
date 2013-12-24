@@ -24,12 +24,12 @@ if __name__ == '__main__':
     img1 = Image.read( fn1 )
     cv = cv2.SURF( 400 )
     kp1 = cv.detect( img1.img, None )
-    e = ImageExtractor( img1, kp1 )
+    e = Extractor( img1, kp1 )
     a = 10
     k = 30
     imgs1 = []
-    for m in [(32,32)]:
-        imgs = e.extract( (0,k), a, m )
+    for m in [8]:
+        imgs = e.subImages( (0,k), a, m )
         imgs1 += imgs
 
     matcher = Matcher( [PHash] )
