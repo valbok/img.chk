@@ -18,7 +18,12 @@ class PHash( Hash ):
     " @return int
     """
     def _calculate( self ):
-        img = self._img.grayscale().resize( (32, 32), cv2.INTER_NEAREST )
+        g = type(self._img.pixel( 0, 0 )) == np.ndarray
+        img = self._img
+        if g:
+            img = img.grayscale()
+
+        img = img.resize( (32, 32), cv2.INTER_NEAREST )
         imf = np.float32( img._img ) / 255.0
         dsty = cv2.dct( imf )[0:8]
         dst = []

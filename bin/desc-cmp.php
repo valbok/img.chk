@@ -75,7 +75,7 @@ if ( !$fn2 )
     exit;
 }
 
-$hd = 3;
+$hd = 1;
 $hs1 = extractHashes( $fn1 );
 $hs2 = extractHashes( $fn2 );
 if ( !$hs1 or !$hs2 )
