@@ -13,7 +13,6 @@ import os
 parentdir = os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) )
 os.sys.path.insert( 0, parentdir )
 
-from matplotlib import pyplot as plt
 import json
 from core import *
 
@@ -32,8 +31,8 @@ if __name__ == '__main__':
             plt.imshow(im.img),plt.show()
 
     result = {'DHash': {}}
-    matcher = Matcher( [DHash] )
-    hashes = matcher.hashes( imgs, False )[DHash]
+    matcher = Matcher( [PHash] )
+    hashes = matcher.hashes( imgs, False )[PHash]
     phs = {}
     for h in hashes:
         phs[str( h )] = h.dict()
