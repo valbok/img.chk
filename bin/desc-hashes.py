@@ -26,16 +26,12 @@ if __name__ == '__main__':
     kp,desc = cv.detectAndCompute( img.img, None )
     e = Extractor( img, kp, desc )
     imgs = e.descImages()
-    if draw:
-        for im in imgs:
-            plt.imshow(im.img),plt.show()
-
-    result = {'DHash': {}}
+    result = {'PHash': {}}
     matcher = Matcher( [PHash] )
-    hashes = matcher.hashes( imgs, False )[PHash]
+    hashes = matcher.hashes( imgs, True )[PHash]
     phs = {}
     for h in hashes:
         phs[str( h )] = h.dict()
 
-    result['DHash'] = phs
+    result['PHash'] = phs
     print json.dumps( result )

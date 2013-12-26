@@ -253,8 +253,6 @@ class Extractor( object ):
     def _dscImage( ds ):
         rows = []
         rs = [ds[i:i + 8] for i in range( 0, len( ds ), 8 )]
-
-        b = []
         row = []
         m = 255
         for r in rs:
