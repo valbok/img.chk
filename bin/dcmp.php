@@ -37,7 +37,7 @@ function getHammingDistance( $hash1, $hash2 )
  */
 function extractHashes( $path )
 {
-    $command = 'python desc-hashes.py ' . $path;
+    $command = 'python dhashes.py ' . $path;
     $output = array();
     $r = 0;
 
@@ -75,7 +75,7 @@ if ( !$fn2 )
     exit;
 }
 
-$hd = 1;
+$hd = 3;
 $hs1 = extractHashes( $fn1 );
 $hs2 = extractHashes( $fn2 );
 if ( !$hs1 or !$hs2 )
@@ -84,11 +84,11 @@ if ( !$hs1 or !$hs2 )
 }
 
 $matched = array();
-print "[" . count( $hs1['DHash'] ) . "] $fn1\n";
-print "[" . count( $hs2['DHash'] ) . "] $fn2\n";
-foreach ( $hs1['DHash'] as $h1 )
+print "[" . count( $hs1['PHash'] ) . "] $fn1\n";
+print "[" . count( $hs2['PHash'] ) . "] $fn2\n";
+foreach ( $hs1['PHash'] as $h1 )
 {
-    foreach( $hs2['DHash'] as $h2 )
+    foreach( $hs2['PHash'] as $h2 )
     {
         $d = getHammingDistance( $h1, $h2 );
         if ( $d <= $hd )

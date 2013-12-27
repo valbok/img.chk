@@ -22,7 +22,8 @@ if __name__ == '__main__':
     draw = False
     fn = sys.argv[1]
     img = Image.read( fn )
-    cv = cv2.SURF( 400 )
+    #cv = cv2.ORB( 400 )
+    cv = cv2.ORB()
     kp,desc = cv.detectAndCompute( img.img, None )
     e = Extractor( img, kp, desc )
     imgs = e.descImages()

@@ -27,14 +27,14 @@ class ExtractorTest( unittest.TestCase ):
                     ( "1_500.jpg", "1_500_cr.jpg", True ),
                     ( "1_500.jpg", "1_500_f.jpg", True ),
                     ( "1_500.jpg", "1_500_left.jpg", True ),
-                    ( "1_500.jpg", "1_500_wb.jpg", True ),
+                    #( "1_500.jpg", "1_500_wb.jpg", True ),
                     ( "1_500.jpg", "1_500_wl.jpg", True ),
                     ( "1_500.jpg", "1_500_sh-100.jpg", True ),
                     ( "1_500.jpg", "1_500_l+100.jpg", True ),
                     #( "1_500.jpg", "1_500_inv.jpg", True ),
                     ( "1_500.jpg", "1_500_brightness.jpg", True ),
                     ( "1_500.jpg", "1_500_brightness-100.jpg", True ),
-                    #( "1_500.jpg", "1_500_contrast.jpg", True ),
+                    ( "1_500.jpg", "1_500_contrast.jpg", True ),
 
                     ( "1.jpg", "1.jpg", True ),
                     ( "1.jpg", "1_500.jpg", True ),
@@ -159,8 +159,8 @@ class ExtractorTest( unittest.TestCase ):
 
     @data_provider( imgDiff )
     def testHashes( self, f1, f2, e ):
-        cv = cv2.SURF( 400 )
-
+#        cv = cv2.SURF( 400 )
+        cv = cv2.ORB()
         img1 = Image.read( "tests/core/images/" + f1 )
         kp1,desc1 = cv.detectAndCompute( img1.img, None )
         img2 = Image.read( "tests/core/images/" + f2 )
@@ -171,7 +171,7 @@ class ExtractorTest( unittest.TestCase ):
 
         imgs1 = e1.descImages()
         imgs2 = e2.descImages()
-        d = 1
+        d = 3
         matcher = Matcher()
         matches = matcher.match( imgs1, imgs2, d )
 

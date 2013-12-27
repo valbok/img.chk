@@ -19,7 +19,8 @@ if __name__ == '__main__':
     if len( sys.argv ) < 3:
         sys.exit( 1 )
 
-    cv = cv2.SURF( 400 )
+    #cv = cv2.SURF( 400 )
+    cv = cv2.ORB()
     matcher = Matcher()
 
     fn1 = sys.argv[1]
@@ -27,16 +28,16 @@ if __name__ == '__main__':
     kp1, desc1 = cv.detectAndCompute( img1.img, None )
     e1 = Extractor( img1, kp1, desc1 )
     imgs1 = e1.descImages()
-    print "[" + str( len( imgs1 ) ) + ":" + str( len( matcher.hashes( imgs1 )[PHash] ) ) + "]", fn1
+    print "[" + str( len( imgs1 ) ) + "]", fn1
 
     fn2 = sys.argv[2]
     img2 = Image.read( fn2 )
     kp2, desc2 = cv.detectAndCompute( img2.img, None )
     e2 = Extractor( img2, kp2, desc2 )
     imgs2 = e2.descImages()
-    print "[" + str( len( imgs2 ) ) + ":" + str( len( matcher.hashes( imgs2 )[PHash] ) ) + "]", fn2
+    print "[" + str( len( imgs2 ) ) + "]", fn2
 
-    d = 1
+    d = 3
     matches = matcher.match( imgs1, imgs2, d )
 
     print len(matches)
