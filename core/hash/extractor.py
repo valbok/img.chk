@@ -169,7 +169,9 @@ class Extractor( object ):
             rows = []
             for i in xrange( 0, len( ds ), 2 ):
                 d = ds[i:i+2]
-                r = "{0:08b}".format( d[0] ) + "{0:08b}".format( d[1] )
+                r = str( bin( d[0] ) )[2:] + str( bin( d[1] ) )[2:]
+                r = ''.join( str( 1 & int( d[0] ) >> i ) for i in range( 8 )[::-1] ) + ''.join( str( 1 & int( d[1]) >> i ) for i in range( 8 )[::-1] )
+
                 rows.append( list( r ) )
 
             im = np.float32( rows )
