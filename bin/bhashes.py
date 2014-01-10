@@ -22,10 +22,11 @@ if __name__ == '__main__':
     draw = False
     fn = sys.argv[1]
     img = Image.read( fn )
-    cv = cv2.ORB()
+    m = ( img.width + img.height ) / 2
+    cv = cv2.ORB( m )
     kp,desc = cv.detectAndCompute( img.img, None )
     e = Extractor( img, kp, desc )
-    imgs = e.descImages()
+    imgs = e.binImages()
     result = {'PHash': {}}
     matcher = Matcher( [PHash] )
     hashes = matcher.hashes( imgs, True )[PHash]

@@ -157,3 +157,24 @@ class Extractor( object ):
             row = []
 
         return np.array( rows, np.float64 )
+
+    """
+    " @return Image[]
+    """
+    def binImages( self ):
+        result = []
+        desc = self._descriptors
+
+        for ds in desc:
+            rows = []
+            for i in xrange( 0, len( ds ), 2 ):
+                d = ds[i:i+2]
+                r = "{0:08b}".format( d[0] ) + "{0:08b}".format( d[1] )
+                rows.append( list( r ) )
+
+            im = np.float32( rows )
+            img = Image( im )
+
+            result.append( img )
+
+        return result

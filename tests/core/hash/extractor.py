@@ -34,7 +34,7 @@ class ExtractorTest( unittest.TestCase ):
                     #( "1_500.jpg", "1_500_inv.jpg", True ),
                     ( "1_500.jpg", "1_500_brightness.jpg", True ),
                     ( "1_500.jpg", "1_500_brightness-100.jpg", True ),
-                    ( "1_500.jpg", "1_500_contrast.jpg", True ),
+                    #( "1_500.jpg", "1_500_contrast.jpg", True ),
 
                     ( "1.jpg", "1.jpg", True ),
                     ( "1.jpg", "1_500.jpg", True ),
@@ -158,9 +158,9 @@ class ExtractorTest( unittest.TestCase ):
                 )
 
     @data_provider( imgDiff )
-    def testHashes( self, f1, f2, e ):
-#        cv = cv2.SURF( 400 )
+    def testDescHashes( self, f1, f2, e ):
         cv = cv2.ORB()
+
         img1 = Image.read( "tests/core/images/" + f1 )
         kp1,desc1 = cv.detectAndCompute( img1.img, None )
         img2 = Image.read( "tests/core/images/" + f2 )
@@ -180,6 +180,33 @@ class ExtractorTest( unittest.TestCase ):
         p = [m.type for m in matches if m.type == "PHash"]
 
         self.assertEquals( e, len( p ) > 0 )
+
+    @data_provider( imgDiff )
+    def testBinHashes( self, f1, f2, e ):
+        img1 = Image.read( "tests/core/images/" + f1 )
+        m = ( img1.width + img1.height ) / 2
+        kp1,desc1 = cv2.ORB(m).detectAndCompute( img1.img, None )
+        img2 = Image.read( "tests/core/images/" + f2 )
+        m = ( img2.width + img2.height ) / 2
+        kp2,desc2 = cv2.ORB(m).detectAndCompute( img2.img, None )
+
+        e1 = Extractor( img1, kp1, desc1 )
+        e2 = Extractor( img2, kp2, desc2 )
+
+        imgs1 = e1.binImages()
+        imgs1.append( img1 )
+        imgs2 = e2.binImages()
+        imgs2.append( img2 )
+        d = 5
+        matcher = Matcher()
+        matches = matcher.match( imgs1, imgs2, d )
+
+        d = [m.type for m in matches if m.type == "DHash"]
+        a = [m.type for m in matches if m.type == "AHash"]
+        p = [m.type for m in matches if m.type == "PHash"]
+
+        #self.assertEquals( e, len( p ) > 0 )
+        self.assertEquals( e, len( a ) > 0 )
 
 if __name__ == '__main__':
     unittest.main()
