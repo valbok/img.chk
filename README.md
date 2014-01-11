@@ -9,7 +9,7 @@ The main feature is to extract fingerprints from an image that can be stored in 
 
 [Example](https://github.com/valbok/img.chk/blob/master/bin/example.py):
 
-""" Scaled and copyrighted image """
+    """ Scaled and copyrighted image """
     img1 = Image.read( "../tests/core/images/1.jpg" )
     img2 = Image.read( "../tests/core/images/1_500_cr.jpg" ) # scaled image with copyright watermark
     h1 = PHash( img1 )
