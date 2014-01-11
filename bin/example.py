@@ -68,6 +68,10 @@ if __name__ == '__main__':
     # No matches comparing whole images
     assert( h1 != h2 )
 
+    cv = cv2.SURF( 400 )
+    kp1 = cv.detect( img1.img, None )
+    kp2 = cv.detect( img2.img, None )
+
     imgs1 = Extractor( img1, kp1 ).subImages()
     imgs2 = Extractor( img2, kp2 ).subImages()
 
@@ -82,7 +86,7 @@ if __name__ == '__main__':
     imgs1 = e1.binImages()
 
     m = ( img2.width + img2.height ) / 2
-    kp2, desc2 = cv2.ORB(m).detectAndCompute( img2.img, None )
+    kp2, desc2 = cv2.ORB( m ).detectAndCompute( img2.img, None )
     e2 = Extractor( img2, kp2, desc2 )
     imgs2 = e2.binImages()
     imgs2.append( img2 )
