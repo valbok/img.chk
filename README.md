@@ -9,14 +9,14 @@ The main feature is to extract fingerprints from an image that can be stored in 
 
 [Example](https://github.com/valbok/img.chk/blob/master/bin/example.py):
 
-    # Scaled and copyrighted image
+""" Scaled and copyrighted image """
     img1 = Image.read( "../tests/core/images/1.jpg" )
     img2 = Image.read( "../tests/core/images/1_500_cr.jpg" ) # scaled image with copyright watermark
     h1 = PHash( img1 )
     h2 = PHash( img2 )
     assert( h1 == h2 )
 
-    # Scaled and cropped image
+    """ Scaled and cropped image """
     img1 = Image.read( "../tests/core/images/madonna-a.jpg" )
     img2 = Image.read( "../tests/core/images/madonna-cropped-face2.jpg" )
     h1 = PHash( img1 )
@@ -37,8 +37,8 @@ The main feature is to extract fingerprints from an image that can be stored in 
 
     assert( len( matches ) > 10 )
 
+    """ Totally different image """
     img1 = Image.read( "../tests/core/images/lenna.png" )
-    # Totally different image
     img2 = Image.read( "../tests/core/images/3_500.jpg" )
 
     kp1 = cv.detect( img1.img, None )
@@ -51,33 +51,38 @@ The main feature is to extract fingerprints from an image that can be stored in 
 
     assert( len( matches ) == 0 )
 
-Also it should be noted about Random Number Generator that is used in cv.kmeans using KMEANS_PP_CENTERS.
-Each time when ImageExtractor().extract() is called using the same data different centroids will be generated.
-That means that on each iteration extracted images will differ. It may produce wrong results within matching.
+    """ Binary images """
+    img1 = Image.read( "../tests/core/images/lenna_face.jpg" )
+    img2 = Image.read( "../tests/core/images/lenna_full.jpg" )
 
-Following sample shows how RNG may affect to matching.
-There are 2 different images but with the same content. First image is a photo, second is a painted version of this photo.
+    h1 = PHash( img1 )
+    h2 = PHash( img2 )
 
-For example, if cv2.kmeans has 100 attempts, first iteration did not return matched images at all,
-but second returns 2 matches:
+    # No matches comparing whole images
+    assert( h1 != h2 )
 
-    cv = cv2.SURF( 400 )
+    imgs1 = Extractor( img1, kp1 ).subImages()
+    imgs2 = Extractor( img2, kp2 ).subImages()
 
-    # Face with closed eyes and text
-    img1 = Image.read( "../tests/core/images/madonna-bad-girl.jpg" )
-    # Painted the same face without text
-    img2 = Image.read( "../tests/core/images/madonna-pop-art.jpg" )
+    matches = Matcher( [PHash] ).match( imgs1, imgs2 )
 
-    kp1 = cv.detect( img1.img, None )
-    kp2 = cv.detect( img2.img, None )
+    # No matches using sub images
+    assert( len( matches ) == 0 )
 
-    # NOTE: Due to RNG extracted images are different per each iteration
-    matches = []
-    i = 0
-    while len( matches ) == 0:
-        imgs1 = Extractor( img1, kp1 ).subImages()
-        imgs2 = Extractor( img2, kp2 ).subImages()
-        matches = Matcher( [PHash] ).match( imgs1, imgs2 )
-        i += 1
+    m = ( img1.width + img1.height ) / 2
+    kp1, desc1 = cv2.ORB( m ).detectAndCompute( img1.img, None )
+    e1 = Extractor( img1, kp1, desc1 )
+    imgs1 = e1.binImages()
 
-    print "Found", len( matches ), "matches on", i, "iteration"
+    m = ( img2.width + img2.height ) / 2
+    kp2, desc2 = cv2.ORB(m).detectAndCompute( img2.img, None )
+    e2 = Extractor( img2, kp2, desc2 )
+    imgs2 = e2.binImages()
+    imgs2.append( img2 )
+
+    matcher = Matcher( [PHash] )
+    matches = matcher.match( imgs1, imgs2, 5 )
+
+    # Found matches
+    assert( len( matches ) > 0 )
+
