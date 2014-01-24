@@ -61,7 +61,7 @@ class Hash( object ):
     """
     @staticmethod
     def hammingDistance( hash1, hash2 ):
-        return bin( hash1 ^ hash2 ).count( "1" )
+        return bin( abs( hash1 ) ^ abs( hash2 ) ).count( "1" )
 
     """
     " @param Hash
