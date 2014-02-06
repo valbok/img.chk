@@ -4,4 +4,6 @@
 " @license GNU GPL v2
 """
 
-from core import *
+from image import *
+from hash import *
+

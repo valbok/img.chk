@@ -9,6 +9,7 @@ import cv2
 from core import *
 import math
 
+
 """
 " Extracts sub images from an image
 """
@@ -164,19 +165,23 @@ class Extractor( object ):
     def binImages( self ):
         result = []
         desc = self._descriptors
+        kps = self._keypoints
 
-        for ds in desc:
+        for di in xrange( len( desc ) ):
+            ds = desc[di]
+            kp = kps[di]
+            x = kp.pt[0]
+            y = kp.pt[1]
+
             rows = []
             for i in xrange( 0, len( ds ), 2 ):
                 d = ds[i:i+2]
-                r = str( bin( d[0] ) )[2:] + str( bin( d[1] ) )[2:]
                 r = ''.join( str( 1 & int( d[0] ) >> i ) for i in range( 8 )[::-1] ) + ''.join( str( 1 & int( d[1]) >> i ) for i in range( 8 )[::-1] )
-
                 rows.append( list( r ) )
 
             im = np.float32( rows )
             img = Image( im )
-
+            img.parent( x=x, y=y )
             result.append( img )
 
         return result

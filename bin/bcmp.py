@@ -39,14 +39,14 @@ if __name__ == '__main__':
     imgs2.append( img2 )
     print "[" + str( len( imgs2 ) ) + "]", fn2
 
-    d = 4
+    d = 7
     matches = matcher.match( imgs1, imgs2, d )
 
     print len(matches)
 
     #d = [m.type for m in matches if m.type == "DHash"]
-    a = [m.type for m in matches if m.type == "AHash"]
+    #a = [m.type for m in matches if m.type == "AHash"]
     p = [m.type for m in matches if m.type == "PHash"]
-    print "a", len(a)
+    #print "a", len(a)
     #print "d", len(d)
     print "p", len(p)

@@ -52,7 +52,7 @@ class Hash( object ):
     " @return string
     """
     def __str__( self ):
-        return str( abs( self._value ) ) #'%(hash)016x' %{"hash": abs( self._value )}
+        return str( abs( self._value ) )
 
     """
     " @param int
