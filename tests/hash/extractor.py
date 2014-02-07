@@ -210,51 +210,6 @@ class ExtractorTest( unittest.TestCase ):
         self.assertEquals( e, len( p ) > 4 )
         #self.assertEquals( e, len( a ) > 4 )
 
-    def testRanBinHashes( self ):
-        from matplotlib import pyplot as plt
-        img1 = Image.read( "tests/images/lenna_full.jpg" )
-        w = img1.width
-        h = img1.height
-        m1 = ( img1.width + img1.height ) / 2
-        kp1,desc1 = cv2.ORB(m1).detectAndCompute( img1.img, None )
-        i = 0
-        while i < 5:
-            print i
-            x = random.randrange( 0, w )
-            y = random.randrange( 0, h )
-            dx = random.randrange( 0, w/2 )
-            dy = random.randrange( 0, h/2 )
-            x1 = x - dx
-            y1 = y - dy
-            x2 = x + dx
-            y2 = y + dy
-
-            img2 = img1.crop( x1, x2, y1, y2 )
-            if not img2:
-                continue
-
-            #plt.imshow(img2.img),plt.show()
-
-            m2 = ( img2.width + img2.height ) / 2
-
-            kp2,desc2 = cv2.ORB(m2).detectAndCompute( img2.img, None )
-            if desc2 is None:
-                continue
-
-            e1 = Extractor( img1, kp1, desc1 )
-            e2 = Extractor( img2, kp2, desc2 )
-
-            imgs1 = e1.binImages()
-            imgs1.append( img1 )
-            imgs2 = e2.binImages()
-            imgs2.append( img2 )
-            d = 8
-            matcher = Matcher()
-            matches = matcher.match( imgs1, imgs2, d )
-            p = [m.type for m in matches if m.type == "PHash"]
-
-            self.assertEquals( True, len( p ) > 4 )
-            i += 1
 
 if __name__ == '__main__':
     unittest.main()
