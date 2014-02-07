@@ -17,15 +17,15 @@ from core import *
 
 if __name__ == '__main__':
     """ Scaled and copyrighted image """
-    img1 = Image.read( "../tests/core/images/1.jpg" )
-    img2 = Image.read( "../tests/core/images/1_500_cr.jpg" ) # scaled image with copyright watermark
+    img1 = Image.read( "../tests/images/1.jpg" )
+    img2 = Image.read( "../tests/images/1_500_cr.jpg" ) # scaled image with copyright watermark
     h1 = PHash( img1 )
     h2 = PHash( img2 )
     assert( h1 == h2 )
 
     """ Scaled and cropped image """
-    img1 = Image.read( "../tests/core/images/madonna-a.jpg" )
-    img2 = Image.read( "../tests/core/images/madonna-cropped-face2.jpg" )
+    img1 = Image.read( "../tests/images/madonna-a.jpg" )
+    img2 = Image.read( "../tests/images/madonna-cropped-face2.jpg" )
     h1 = PHash( img1 )
     h2 = PHash( img2 )
     assert( h1 != h2 ) # should not be true due to huge modifications
@@ -45,8 +45,8 @@ if __name__ == '__main__':
     assert( len( matches ) > 10 )
 
     """ Totally different image """
-    img1 = Image.read( "../tests/core/images/lenna.png" )
-    img2 = Image.read( "../tests/core/images/3_500.jpg" )
+    img1 = Image.read( "../tests/images/lenna.jpg" )
+    img2 = Image.read( "../tests/images/3_500.jpg" )
 
     kp1 = cv.detect( img1.img, None )
     kp2 = cv.detect( img2.img, None )
@@ -59,8 +59,8 @@ if __name__ == '__main__':
     assert( len( matches ) == 0 )
 
     """ Binary images """
-    img1 = Image.read( "../tests/core/images/lenna_face.jpg" )
-    img2 = Image.read( "../tests/core/images/lenna_full.jpg" )
+    img1 = Image.read( "../tests/images/lenna_face.jpg" )
+    img2 = Image.read( "../tests/images/lenna_full.jpg" )
 
     h1 = PHash( img1 )
     h2 = PHash( img2 )

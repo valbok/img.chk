@@ -12,7 +12,7 @@ import random
 class ExtractorTest( unittest.TestCase ):
 
     def testExtract( self ):
-        img = Image.read( "tests/core/images/madonna-a.jpg" )
+        img = Image.read( "tests/images/madonna-a.jpg" )
         kp = cv2.SURF( 5000 ).detect( img.img, None )
         imgs = Extractor( img, kp ).subImages( (1,2) )
 
@@ -162,9 +162,9 @@ class ExtractorTest( unittest.TestCase ):
         return
         cv = cv2.ORB()
 
-        img1 = Image.read( "tests/core/images/" + f1 )
+        img1 = Image.read( "tests/images/" + f1 )
         kp1,desc1 = cv.detectAndCompute( img1.img, None )
-        img2 = Image.read( "tests/core/images/" + f2 )
+        img2 = Image.read( "tests/images/" + f2 )
         kp2,desc2 = cv.detectAndCompute( img2.img, None )
 
         e1 = Extractor( img1, kp1, desc1 )
@@ -185,10 +185,10 @@ class ExtractorTest( unittest.TestCase ):
     @data_provider( imgDiff )
     def testBinHashes( self, f1, f2, e ):
         return
-        img1 = Image.read( "tests/core/images/" + f1 )
+        img1 = Image.read( "tests/images/" + f1 )
         m = ( img1.width + img1.height ) / 2
         kp1,desc1 = cv2.ORB(m).detectAndCompute( img1.img, None )
-        img2 = Image.read( "tests/core/images/" + f2 )
+        img2 = Image.read( "tests/images/" + f2 )
         m = ( img2.width + img2.height ) / 2
         kp2,desc2 = cv2.ORB(m).detectAndCompute( img2.img, None )
 
@@ -212,7 +212,7 @@ class ExtractorTest( unittest.TestCase ):
 
     def testRanBinHashes( self ):
         from matplotlib import pyplot as plt
-        img1 = Image.read( "tests/core/images/lenna_full.jpg" )
+        img1 = Image.read( "tests/images/lenna_full.jpg" )
         w = img1.width
         h = img1.height
         m1 = ( img1.width + img1.height ) / 2

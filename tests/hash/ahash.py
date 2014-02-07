@@ -11,7 +11,7 @@ from core import *
 class AHashTest( unittest.TestCase ):
 
     def testValue( self ):
-        img = Image.read( "tests/core/images/1_500.jpg" )
+        img = Image.read( "tests/images/1_500.jpg" )
         h = AHash( img )
         v = h.value
         s = str( h )
@@ -153,8 +153,8 @@ class AHashTest( unittest.TestCase ):
 
     @data_provider( imgdDiff )
     def testHash( self, f1, f2, e ):
-        img1 = Image.read( "tests/core/images/" + f1 )
-        img2 = Image.read( "tests/core/images/" + f2 )
+        img1 = Image.read( "tests/images/" + f1 )
+        img2 = Image.read( "tests/images/" + f2 )
         h1 = AHash( img1 )
         h2 = AHash( img2 )
 

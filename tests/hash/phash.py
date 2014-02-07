@@ -11,7 +11,7 @@ from core import *
 class PHashTest( unittest.TestCase ):
 
     def testValue( self ):
-        img = Image.read( "tests/core/images/1_500.jpg" )
+        img = Image.read( "tests/images/1_500.jpg" )
         h = PHash( img )
         v = h.value
         s = str( h )
@@ -152,8 +152,8 @@ class PHashTest( unittest.TestCase ):
 
     @data_provider( imgpDiff )
     def testPerceptualHash( self, f1, f2, e ):
-        img1 = Image.read( "tests/core/images/" + f1 )
-        img2 = Image.read( "tests/core/images/" + f2 )
+        img1 = Image.read( "tests/images/" + f1 )
+        img2 = Image.read( "tests/images/" + f2 )
         h1 = PHash( img1 )
         h2 = PHash( img2 )
 

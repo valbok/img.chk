@@ -89,7 +89,7 @@ class Image( object ):
     " @return {img, x, y}
     """
     def parent( self, parent = False, x = False, y = False ):
-        if x or y:
+        if x or y or parent:
             self._parent = {"img": parent, 'x': int( x ), 'y': int( y )}
             return self
 
