@@ -11,7 +11,7 @@ These fingerprints should be very simple and easy comparable.
 Such fingerprint is a 64 bit hash.
 
 It can be matched/fetched using simple SQL query.
-In case if it itsvery slow to match it would be good idea to use [HEngine](https://github.com/valbok/HEngine).
+In case if it is a bit slow to match it would be good idea to use [HEngine](https://github.com/valbok/HEngine).
 
 Following shows matches using extracted hashes
 
