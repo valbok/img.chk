@@ -11,9 +11,9 @@ These fingerprints should be very simple and easy comparable.
 Such fingerprint is a 64 bit hash.
 
 It can be matched/fetched using simple SQL query.
-In case if it it very slow to match it would be good idea to use [HEngine](https://github.com/valbok/HEngine).
+In case if it itsvery slow to match it would be good idea to use [HEngine](https://github.com/valbok/HEngine).
 
-Following example shows matches using extracted hashes
+Following shows matches using extracted hashes
 
     $ cd bin; ./bdm.py ../tests/images/lenna_cropped.jpg ../tests/images/lenna.jpg
 
