@@ -15,7 +15,7 @@ In case if it it very slow to match it would be good idea to use [HEngine](https
 
 Following example shows matches using extracted hashes
 
-    ./bdm.py ../tests/images/lenna_cropped.jpg ../tests/images/lenna.jpg
+    $ cd bin; ./bdm.py ../tests/images/lenna_cropped.jpg ../tests/images/lenna.jpg
 
 [Example](https://github.com/valbok/img.chk/blob/master/bin/example.py):
 
