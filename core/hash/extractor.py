@@ -111,55 +111,6 @@ class Extractor( object ):
         return result
 
     """
-    " @return []
-    """
-    def descImages( self ):
-        result = []
-        Z = []
-        kp = self._keypoints
-        desc = self._descriptors
-        lkp = len( kp )
-        for ki in xrange( lkp ):
-            k = kp[ki]
-            ds = desc[ki]
-            rows = Extractor._dscImage( ds )
-
-            im = np.float32( rows )
-            img = Image( im )
-            result.append( img )
-
-        return result
-
-    """
-    " @param [] Descriptors
-    " @return []
-    """
-    @staticmethod
-    def _dscImage( ds, m = 1 ):
-        rows = []
-        rs = [ds[i:i + 4] for i in range( 0, len( ds ), 4 )]
-        row = []
-        for r in rs:
-            item = [r[0]*m, 0     , r[2]*m, 0,\
-                    0     , r[1]*m, 0     , r[3]*m]
-
-            row.append( item )
-            if len( row ) != 2:
-                continue
-
-            res1=[]
-            res2=[]
-            for rr in row:
-                res1 += rr[0:4]
-                res2 += rr[4:8]
-
-            rows.append( res1 )
-            rows.append( res2 )
-            row = []
-
-        return np.array( rows, np.float64 )
-
-    """
     " @return Image[]
     """
     def binImages( self ):
