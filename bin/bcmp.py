@@ -20,7 +20,6 @@ if __name__ == '__main__':
         sys.exit( 1 )
 
     matcher = Matcher()
-    m = 500
     fn1 = sys.argv[1]
     img1 = Image.read( fn1 )
     m = ( img1.width + img1.height ) / 2
