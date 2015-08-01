@@ -20,7 +20,6 @@ if __name__ == '__main__':
         sys.exit( 1 )
 
     matcher = Matcher()
-    m = 500
     fn1 = sys.argv[1]
     img1 = Image.read( fn1 )
     m = ( img1.width + img1.height ) / 2
@@ -42,11 +41,7 @@ if __name__ == '__main__':
     d = 7
     matches = matcher.match( imgs1, imgs2, d )
 
-    print len(matches)
+    print "Total matches = ", len(matches)
 
-    #d = [m.type for m in matches if m.type == "DHash"]
-    #a = [m.type for m in matches if m.type == "AHash"]
-    p = [m.type for m in matches if m.type == "PHash"]
-    #print "a", len(a)
-    #print "d", len(d)
-    print "p", len(p)
+    #p = [m.type for m in matches if m.type == "PHash"]
+    #print "p", len(p)
