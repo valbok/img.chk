@@ -1,15 +1,15 @@
-##
+###
 # @license GNU GPL v2
-# @package img.chk
-##
+# @package img.Classifier
+###
 
-##
-#  Creates a small neural network to check the
-#  backpropagation gradients, it will output the analytical gradients
-#  produced by your backprop code and the numerical gradients (computed
-#  using computeNumericalGradient). These two gradient computations should
-#  result in very similar values.
-##
+###
+# Creates a small neural network to check the
+# backpropagation gradients, it will output the analytical gradients
+# produced by your backprop code and the numerical gradients (computed
+# using computeNumericalGradient). These two gradient computations should
+# result in very similar values.
+###
 function checkNNGradients(lambda)
     if ~exist('lambda', 'var') || isempty(lambda)
         lambda = 0;

@@ -1,14 +1,14 @@
-##
+###
 # @author VaL
 # @copyright Copyright (C) 2015 VaL Doroshchuk
 # @license GNU GPL v2
-# @package img.chk
-##
+# @package img.Classifier
+###
 
-##
+###
 # Predicts or makes decision about does a row of features belong to the class?
 # @return Matrix of predicted values.
-##
+###
 function p = predict(Theta1, Theta2, X)
     m = size(X, 1);
 

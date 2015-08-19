@@ -1,14 +1,14 @@
 #!/usr/bin/env octave
-##
+###
 # @author VaL
 # @copyright Copyright (C) 2015 VaL Doroshchuk
 # @license GNU GPL v2
-# @package img.chk
-##
+# @package img.Classifier
+###
 
-##
+###
 # Classifier based on 3 layers neuron network using one class.
-##
+###
 
 %% Initialization
 clear ; close all; clc
@@ -73,7 +73,7 @@ rand_pred = predict(Theta1, Theta2, X);
 % Unroll parameters. 
 nn_params = [Theta1(:) ; Theta2(:)];
 
-fprintf('\nTraining Neural Network %i->%i->%i by repeating learning algorithm %i times using %i as lambda... \n', input_layer_size, hidden_layer_size, num_classes, tries, lambda)
+fprintf('\nTraining Neural Network %i->%i->%i by repeating %i times using %f as lambda... \n', input_layer_size, hidden_layer_size, num_classes, tries, lambda)
 
 % Change the MaxIter to a larger value to see how more training helps.
 options = optimset('MaxIter', tries);

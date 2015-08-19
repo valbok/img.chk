@@ -1,12 +1,12 @@
-##
+###
 # @license GNU GPL v2
-# @package img.chk
-##
+# @package img.Classifier
+###
 
-##
+###
 # Computes the numerical gradient of the function J around theta. 
 # Calling y = J(theta) should return the function value at theta.
-##
+###
 function numgrad = computeNumericalGradient(J, theta)
     % Notes: The following code implements numerical gradient checking, and 
     %        returns the numerical gradient.It sets numgrad(i) to (a numerical 

@@ -1,11 +1,11 @@
-##
+###
 # @author VaL
 # @copyright Copyright (C) 2015 VaL Doroshchuk
 # @license GNU GPL v2
-# @package img.chk
-##
+# @package img.Classifier
+###
 
-##
+###
 # Implements the neural network cost function for a two layer
 # neural network which performs classification.
 #
@@ -15,7 +15,7 @@
 # 
 #  The returned parameter grad should be a "unrolled" vector of the
 #  partial derivatives of the neural network.
-##
+###
 function [J grad] = nnCostFunction(nn_params, ...
                                    input_layer_size, ...
                                    hidden_layer_size, ...
